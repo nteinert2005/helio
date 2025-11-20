@@ -210,7 +210,7 @@ export default function DashboardPage() {
         {/* CTA */}
         <div className="text-center pt-4">
           <Link href="/log" className="btn-primary inline-block">
-            {todayLog ? 'Update Today's Log' : 'Log Today's Metrics'}
+            {todayLog ? "Update Today's Log" : "Log Today's Metrics"}
           </Link>
         </div>
       </div>
