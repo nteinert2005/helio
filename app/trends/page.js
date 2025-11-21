@@ -180,7 +180,7 @@ export default function TrendsPage() {
               Start logging your daily metrics to see your weight trend over time.
             </p>
             <Link href="/log" className="btn-primary inline-block">
-              Log Today's Metrics
+              Log Today&apos;s Metrics
             </Link>
           </div>
         )}

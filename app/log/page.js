@@ -154,7 +154,7 @@ export default function LogPage() {
             <Link href="/dashboard" className="text-label-text hover:text-body-text transition-colors">
               <ArrowLeft className="w-5 h-5" />
             </Link>
-            <h1 className="text-xl font-bold">Log Today's Metrics</h1>
+            <h1 className="text-xl font-bold">Log Today&apos;s Metrics</h1>
           </div>
         </div>
       </header>

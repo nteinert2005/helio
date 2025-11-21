@@ -11,7 +11,7 @@ export default function LandingPage() {
         <div className="relative container mx-auto px-6 py-20 md:py-32">
           <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
             <h1 className="text-5xl md:text-7xl font-black tracking-tight">
-              Why didn't I lose weight{' '}
+              Why didn&apos;t I lose weight{' '}
               <span className="gradient-text">today?</span>
             </h1>
 

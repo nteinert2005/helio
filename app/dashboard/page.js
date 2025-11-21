@@ -166,7 +166,7 @@ export default function DashboardPage() {
             <>
               <div className="text-4xl font-bold text-label-text">No data yet</div>
               <Link href="/log" className="btn-primary inline-block mt-4">
-                Log Today's Metrics
+                Log Today&apos;s Metrics
               </Link>
             </>
           )}
@@ -175,7 +175,7 @@ export default function DashboardPage() {
         {/* Today's Insight */}
         {insight && (
           <div className="card-glass space-y-6 animate-slide-up">
-            <h2 className="text-xl font-bold">Today's Insight</h2>
+            <h2 className="text-xl font-bold">Today&apos;s Insight</h2>
 
             <div className="space-y-4">
               <div>
@@ -210,7 +210,7 @@ export default function DashboardPage() {
         {/* CTA */}
         <div className="text-center pt-4">
           <Link href="/log" className="btn-primary inline-block">
-            {todayLog ? "Update Today's Log" : "Log Today's Metrics"}
+            {todayLog ? "Update Today&apos;s Log" : "Log Today&apos;s Metrics"}
           </Link>
         </div>
       </div>

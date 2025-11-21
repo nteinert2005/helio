@@ -149,7 +149,7 @@ export default function OnboardingPage() {
                 required
               />
               <p className="text-xs text-label-text mt-1">
-                Enter the dose you're currently taking (e.g., "0.5mg" or "5mg")
+                Enter the dose you&apos;re currently taking (e.g., &quot;0.5mg&quot; or &quot;5mg&quot;)
               </p>
             </div>
 
