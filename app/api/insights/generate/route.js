@@ -1,11 +1,15 @@
 import { NextResponse } from 'next/server'
-import OpenAI from 'openai'
 import { supabaseAdmin } from '@/lib/supabase'
 import { analyzeRules, formatRulesForAI } from '@/lib/rules'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+// OpenAI is optional - only initialize if API key is provided
+let openai = null
+if (process.env.OPENAI_API_KEY) {
+  const OpenAI = require('openai').default
+  openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  })
+}
 
 export async function POST(request) {
   try {
@@ -131,18 +135,26 @@ Response Format:
   "focus_today": "1-2 actionable suggestions for today (e.g., hydration, protein, steps)"
 }`
 
-    // Call OpenAI
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: 'Generate my daily insight.' },
-      ],
-      temperature: 0.7,
-      response_format: { type: 'json_object' },
-    })
+    // Generate insight - use OpenAI if available, otherwise use fallback
+    let insightData
 
-    const insightData = JSON.parse(completion.choices[0].message.content)
+    if (openai) {
+      // Call OpenAI
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: 'Generate my daily insight.' },
+        ],
+        temperature: 0.7,
+        response_format: { type: 'json_object' },
+      })
+
+      insightData = JSON.parse(completion.choices[0].message.content)
+    } else {
+      // Fallback insight when OpenAI is not configured
+      insightData = generateFallbackInsight(todayLog, yesterdayLog, triggeredRules, weightChange)
+    }
 
     // Save insight to database
     const { data: insight, error: insightError } = await supabase
@@ -174,5 +186,65 @@ Response Format:
       { error: 'Failed to generate insight', details: error.message },
       { status: 500 }
     )
+  }
+}
+
+// Fallback insight generator when OpenAI is not available
+function generateFallbackInsight(todayLog, yesterdayLog, triggeredRules, weightChange) {
+  const change = parseFloat(weightChange)
+  const direction = change > 0 ? 'up' : change < 0 ? 'down' : 'stable'
+
+  // Build reason based on triggered rules and weight change
+  let reason = ''
+  if (direction === 'up') {
+    const mainFactors = []
+    triggeredRules.forEach(rule => {
+      if (rule.cluster === 'water_retention' || rule.cluster === 'digestive') {
+        mainFactors.push(rule.message.toLowerCase())
+      }
+    })
+
+    if (mainFactors.length > 0) {
+      reason = `Your weight is up ${Math.abs(change).toFixed(1)} lbs today, likely due to ${mainFactors[0]}. This is temporary water weight, not fat gain.`
+    } else {
+      reason = `Your weight is up ${Math.abs(change).toFixed(1)} lbs today. Daily fluctuations are completely normal on GLP-1 medications and don&apos;t reflect fat gain.`
+    }
+  } else if (direction === 'down') {
+    reason = `Great progress! You&apos;re down ${Math.abs(change).toFixed(1)} lbs from yesterday. This reflects your consistent efforts and the medication working as intended.`
+  } else {
+    reason = `Your weight is stable today. This is normal - weight loss isn&apos;t linear, and plateaus are part of the journey on GLP-1 medications.`
+  }
+
+  // Build trend interpretation
+  let trendInterpretation = 'You&apos;re in the early phase of your GLP-1 journey. Daily weight can vary by 2-5 lbs due to water retention, digestion, and hormones. Focus on weekly trends, not daily numbers.'
+
+  // Build focus recommendations based on triggered rules
+  const recommendations = []
+  triggeredRules.forEach(rule => {
+    if (rule.cluster === 'water_retention' && rule.rule === 'dehydration') {
+      recommendations.push('Drink at least 64oz of water today')
+    }
+    if (rule.cluster === 'water_retention' && rule.rule === 'low_sleep_cortisol') {
+      recommendations.push('Aim for 7+ hours of sleep tonight')
+    }
+    if (rule.cluster === 'nutrition' && rule.rule === 'low_protein') {
+      recommendations.push('Increase protein intake to 80g+ today')
+    }
+    if (rule.cluster === 'digestive' && rule.rule === 'constipation') {
+      recommendations.push('Consider adding more fiber and water to help with digestion')
+    }
+  })
+
+  let focusToday = 'Stay consistent with your medication, log your metrics daily, and trust the process. '
+  if (recommendations.length > 0) {
+    focusToday += recommendations.slice(0, 2).join(', and ') + '.'
+  } else {
+    focusToday += 'Keep up your great habits!'
+  }
+
+  return {
+    reason,
+    trend_interpretation: trendInterpretation,
+    focus_today: focusToday
   }
 }
