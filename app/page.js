@@ -46,7 +46,7 @@ export default function LandingPage() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-7xl mx-auto">
 
           {/* Left Content */}
-          <div className="space-y-8 max-w-xl">
+          <div className="space-y-8 max-w-xl lg:order-1 order-1">
             {/* Logo */}
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-action to-purple-600 flex items-center justify-center">
@@ -55,87 +55,24 @@ export default function LandingPage() {
               <h1 className="text-2xl font-bold tracking-tight">Helio</h1>
             </div>
 
-            {/* Headline */}
+            {/* Hero Headline */}
             <div className="space-y-4">
               <h2 className="text-5xl md:text-6xl font-black tracking-tight leading-tight">
-                Effortless tracking. <br /> 
+                Daily Insights to <br />
                 <span className="bg-gradient-to-r from-primary-action to-purple-600 bg-clip-text text-transparent">
-                  Intelligent insight.
+                  Decode Your Weight Journey
                 </span>
-                
               </h2>
 
               <p className="text-xl text-body-text leading-relaxed">
-                Helio makes logging instant. Helio helps you understand the “why” behind your habits—so staying on track becomes effortless.
+                Log in seconds. Understand your habits. Unlock actionable insights powered by AI.
               </p>
             </div>
 
-            {/* Email Form */}
-            <form onSubmit={handleJoinWaitlist} className="space-y-3">
-              <div className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                  disabled={loading}
-                  className="flex-1 px-6 py-4 bg-card-bg border border-white/10 rounded-xl text-body-text placeholder:text-label-text focus:outline-none focus:border-primary-action transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                />
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="px-8 py-4 bg-primary-action hover:bg-primary-action/90 text-white font-semibold rounded-xl transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-                >
-                  {loading ? 'Joining...' : 'Join waitlist'}
-                </button>
-              </div>
-
-              {/* Success Message */}
-              {message && (
-                <div className="px-4 py-3 bg-success/10 border border-success/20 rounded-lg text-success text-sm">
-                  {message}
-                </div>
-              )}
-
-              {/* Error Message */}
-              {error && (
-                <div className="px-4 py-3 bg-critical/10 border border-critical/20 rounded-lg text-critical text-sm">
-                  {error}
-                </div>
-              )}
-            </form>
-
-            {/* Social Link */}
-            <div className="flex items-center gap-2 text-sm text-label-text">
-              <span>Follow</span>
-              <a
-                href="https://studio617.notion.site/Helio-2b38077a59928055a371d7f2920dbd51?source=copy_link"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-body-text hover:text-primary-action transition-colors inline-flex items-center gap-1"
-              >
-                helio for updates
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-            </div>
-
-            {/* Footer Links */}
-            <div className="flex items-center gap-6 text-sm text-label-text pt-4 border-t border-white/5">
-              <Link href="/privacy" className="hover:text-body-text transition-colors">
-                Privacy Policy
-              </Link>
-              <span className="text-white/20">•</span>
-              <Link href="/terms" className="hover:text-body-text transition-colors">
-                Terms of Service
-              </Link>
-            </div>
           </div>
 
           {/* Right Phone Mockup */}
-          <div className="relative flex justify-center lg:justify-end">
+          <div className="relative flex justify-center lg:justify-end lg:order-2 order-2">
             <div className="relative">
               {/* Phone Frame */}
               <div className="relative w-[320px] h-[650px] bg-gradient-to-br from-gray-900 to-black rounded-[3rem] p-3 shadow-2xl border border-white/10">
@@ -247,6 +184,125 @@ export default function LandingPage() {
 
               {/* Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary-action/20 to-purple-600/20 blur-3xl -z-10"></div>
+            </div>
+          </div>
+
+          {/* Additional Content - Below phone on mobile */}
+          <div className="space-y-8 max-w-xl lg:col-span-2 order-3">
+            {/* What is Helio Section */}
+            <div className="space-y-3 py-4">
+              <h3 className="text-sm uppercase tracking-widest text-label-text font-semibold">What is Helio?</h3>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded-full bg-success/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-2 h-2 rounded-full bg-success"></div>
+                  </div>
+                  <p className="text-body-text"><span className="font-semibold text-white">Fast, simple logging.</span> Track your daily metrics in under 60 seconds—no complex forms or tedious data entry.</p>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded-full bg-primary-action/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-2 h-2 rounded-full bg-primary-action"></div>
+                  </div>
+                  <p className="text-body-text"><span className="font-semibold text-white">AI-powered insights.</span> Discover the &quot;why&quot; behind your weight fluctuations with personalized, science-backed explanations.</p>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded-full bg-warning/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-2 h-2 rounded-full bg-warning"></div>
+                  </div>
+                  <p className="text-body-text"><span className="font-semibold text-white">Stay on track.</span> Maintain your GLP-1 progress, avoid common pitfalls, and build healthier routines with confidence.</p>
+                </li>
+              </ul>
+            </div>
+
+            {/* Testimonial Quote */}
+            <div className="py-4 border-l-2 border-primary-action pl-4 space-y-2">
+              <p className="text-body-text italic">
+                &quot;Finally, I understand why my weight goes up some days even when I&apos;m doing everything right. Helio takes the guesswork out of my GLP-1 journey.&quot;
+              </p>
+              <p className="text-label-text text-sm">— Sarah M., Early Tester</p>
+            </div>
+
+            {/* Primary CTA */}
+            <form onSubmit={handleJoinWaitlist} className="space-y-3">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  disabled={loading}
+                  className="flex-1 px-6 py-4 bg-card-bg border border-white/10 rounded-xl text-body-text placeholder:text-label-text focus:outline-none focus:border-primary-action transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="px-8 py-4 bg-primary-action hover:bg-primary-action/90 text-white font-semibold rounded-xl transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg shadow-primary-action/30"
+                >
+                  {loading ? 'Joining...' : 'Join Waitlist →'}
+                </button>
+              </div>
+
+              {/* Success Message */}
+              {message && (
+                <div className="px-4 py-3 bg-success/10 border border-success/20 rounded-lg text-success text-sm">
+                  {message}
+                </div>
+              )}
+
+              {/* Error Message */}
+              {error && (
+                <div className="px-4 py-3 bg-critical/10 border border-critical/20 rounded-lg text-critical text-sm">
+                  {error}
+                </div>
+              )}
+            </form>
+
+            {/* Trust Indicators */}
+            <div className="flex items-center gap-6 text-xs text-label-text">
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Secure & Private</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-primary-action" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
+                </svg>
+                <span>Join 500+ Early Testers</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-warning" />
+                <span>Powered by HelioIQ</span>
+              </div>
+            </div>
+
+            {/* Social Link */}
+            <div className="flex items-center gap-2 text-sm text-label-text">
+              <span>Follow</span>
+              <a
+                href="https://studio617.notion.site/Helio-2b38077a59928055a371d7f2920dbd51?source=copy_link"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-body-text hover:text-primary-action transition-colors inline-flex items-center gap-1"
+              >
+                helio for updates
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+
+            {/* Footer Links */}
+            <div className="flex items-center gap-6 text-sm text-label-text pt-4 border-t border-white/5">
+              <Link href="/privacy" className="hover:text-body-text transition-colors">
+                Privacy Policy
+              </Link>
+              <span className="text-white/20">•</span>
+              <Link href="/terms" className="hover:text-body-text transition-colors">
+                Terms of Service
+              </Link>
             </div>
           </div>
 
