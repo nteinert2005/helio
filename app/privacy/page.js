@@ -22,7 +22,7 @@ export default function PrivacyPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold">Introduction</h2>
             <p>
-              Welcome to Helio ("we," "our," or "us"). We are committed to protecting your privacy and handling your data in an open and transparent manner. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our application.
+              Welcome to Helio (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). We are committed to protecting your privacy and handling your data in an open and transparent manner. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our application.
             </p>
           </section>
 
@@ -73,7 +73,7 @@ export default function PrivacyPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold">AI and Third-Party Services</h2>
             <p>
-              We use OpenAI's API to generate personalized insights. When processing your data through AI services, we:
+              We use OpenAI&apos;s API to generate personalized insights. When processing your data through AI services, we:
             </p>
             <ul className="list-disc list-inside space-y-2 ml-4">
               <li>Do not share personally identifiable information (PII)</li>
@@ -105,7 +105,7 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold">Children's Privacy</h2>
+            <h2 className="text-2xl font-bold">Children&apos;s Privacy</h2>
             <p>
               Helio is not intended for use by children under the age of 18. We do not knowingly collect personal information from children under 18. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.
             </p>
