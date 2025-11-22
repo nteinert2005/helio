@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import PWAInstaller from "../components/PWAInstaller"
+import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} bg-primary-bg text-body-text antialiased`}>
         <PWAInstaller />
         {children}
+        <Analytics />
       </body>
     </html>
   )
