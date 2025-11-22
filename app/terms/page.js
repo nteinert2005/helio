@@ -22,7 +22,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold">Agreement to Terms</h2>
             <p>
-              By accessing or using Helio ("the Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of these terms, you do not have permission to access the Service.
+              By accessing or using Helio (&quot;the Service&quot;), you agree to be bound by these Terms of Service (&quot;Terms&quot;). If you disagree with any part of these terms, you do not have permission to access the Service.
             </p>
           </section>
 
@@ -103,7 +103,7 @@ export default function TermsPage() {
             <ul className="list-disc list-inside space-y-2 ml-4">
               <li>Billed in advance on a recurring basis (monthly or annually)</li>
               <li>Non-refundable except as required by law</li>
-              <li>Subject to change with 30 days' notice</li>
+              <li>Subject to change with 30 days&apos; notice</li>
             </ul>
             <p>
               You may cancel your subscription at any time through the Settings page. Cancellation will take effect at the end of your current billing period.
@@ -136,7 +136,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold">Disclaimer of Warranties</h2>
             <p>
-              THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. HELIO DOES NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.
+              THE SERVICE IS PROVIDED ON AN &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; BASIS WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. HELIO DOES NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.
             </p>
           </section>
 
@@ -150,7 +150,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold">Changes to Terms</h2>
             <p>
-              We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect.
+              We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days&apos; notice prior to any new terms taking effect.
             </p>
             <p>
               By continuing to access or use our Service after revisions become effective, you agree to be bound by the revised terms.
