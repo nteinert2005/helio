@@ -101,29 +101,30 @@ export default function InsightsPage() {
 
   return (
     <div className="min-h-screen pb-20 bg-primary-bg">
-      {/* Header */}
-      <header className="border-b border-white/10 bg-card-bg/50 backdrop-blur-lg sticky top-0 z-10">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link href="/dashboard" className="text-label-text hover:text-body-text transition-colors">
-                <ArrowLeft className="w-5 h-5" />
-              </Link>
-              <h1 className="text-xl font-bold">Your Insights</h1>
-            </div>
-            {canGenerateToday && (
-              <button
-                onClick={handleGenerateInsight}
-                disabled={generating}
-                className="px-4 py-2 bg-primary-action text-white rounded-full text-sm font-medium hover:scale-105 transition-transform disabled:opacity-50 flex items-center gap-2"
-              >
-                <Sparkles className="w-4 h-4" />
-                {generating ? 'Generating...' : 'Generate Today'}
-              </button>
-            )}
-          </div>
+      {/* Top Bar */}
+      <div className="px-6 py-6 flex items-center justify-between">
+        <Link href="/dashboard" className="text-label-text hover:text-body-text transition-colors">
+          <ArrowLeft className="w-5 h-5" />
+        </Link>
+        <h1 className="text-xl font-bold tracking-tight">Your Insights</h1>
+        <Link href="/settings" className="w-10 h-10 rounded-full bg-card-bg flex items-center justify-center">
+          <User className="w-5 h-5 text-body-text" />
+        </Link>
+      </div>
+
+      {/* Generate Insight Button */}
+      {canGenerateToday && (
+        <div className="px-6 pb-4">
+          <button
+            onClick={handleGenerateInsight}
+            disabled={generating}
+            className="w-full px-4 py-3 bg-primary-action text-white rounded-xl text-sm font-medium hover:scale-105 transition-transform disabled:opacity-50 flex items-center justify-center gap-2"
+          >
+            <Sparkles className="w-4 h-4" />
+            {generating ? 'Generating...' : 'Generate Today'}
+          </button>
         </div>
-      </header>
+      )}
 
       <div className="container mx-auto px-6 py-8 max-w-4xl">
         {insights.length === 0 ? (

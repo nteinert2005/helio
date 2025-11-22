@@ -94,86 +94,113 @@ export default function TrendsPage() {
 
   return (
     <div className="min-h-screen pb-20 bg-primary-bg">
-      {/* Header */}
-      <header className="border-b border-white/10 bg-card-bg/50 backdrop-blur-lg sticky top-0 z-10">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center gap-4">
-            <Link href="/dashboard" className="text-label-text hover:text-body-text transition-colors">
-              <ArrowLeft className="w-5 h-5" />
-            </Link>
-            <h1 className="text-xl font-bold">Your Trends</h1>
-          </div>
-        </div>
-      </header>
+      {/* Top Bar */}
+      <div className="px-6 py-6 flex items-center justify-between">
+        <Link href="/dashboard" className="text-label-text hover:text-body-text transition-colors">
+          <ArrowLeft className="w-5 h-5" />
+        </Link>
+        <h1 className="text-xl font-bold tracking-tight">Your Trends</h1>
+        <Link href="/settings" className="w-10 h-10 rounded-full bg-card-bg flex items-center justify-center">
+          <User className="w-5 h-5 text-body-text" />
+        </Link>
+      </div>
 
-      <div className="container mx-auto px-6 py-8 max-w-6xl space-y-8">
-        {/* Stats Cards */}
+      <div className="container mx-auto px-6 py-8 max-w-4xl space-y-8">
+        {/* Main Stats Display */}
         {stats && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="card text-center space-y-2">
-              <div className="text-3xl font-bold text-success">{stats.totalLoss.toFixed(1)}</div>
-              <div className="text-xs text-label-text uppercase tracking-wide">Total Loss (lbs)</div>
+          <div className="text-center space-y-6 py-8">
+            {/* Large Weight Loss Number */}
+            <div className="space-y-2">
+              <div className="text-7xl md:text-8xl font-black tracking-tight">
+                {Math.abs(stats.totalLoss).toFixed(1)}<span className="text-5xl text-label-text">{' '}lbs</span>
+              </div>
+
+              {/* Today's Change */}
+              <div className="flex items-center justify-center gap-2 text-xl">
+                <span className="text-label-text">Total</span>
+                <div className="flex items-center gap-1 text-success">
+                  {stats.totalLoss >= 0 ? (
+                    <>
+                      <TrendingDown className="w-5 h-5" />
+                      <span>{((stats.totalLoss / stats.startWeight) * 100).toFixed(2)}%</span>
+                      <span className="text-label-text">(-{stats.totalLoss.toFixed(1)} lbs)</span>
+                    </>
+                  ) : (
+                    <>
+                      <TrendingUp className="w-5 h-5" />
+                      <span>{((Math.abs(stats.totalLoss) / stats.startWeight) * 100).toFixed(2)}%</span>
+                      <span className="text-label-text">(+{Math.abs(stats.totalLoss).toFixed(1)} lbs)</span>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
 
-            <div className="card text-center space-y-2">
-              <div className="text-3xl font-bold">{stats.currentWeight}</div>
-              <div className="text-xs text-label-text uppercase tracking-wide">Current Weight</div>
-            </div>
-
-            <div className="card text-center space-y-2">
-              <div className="text-3xl font-bold text-primary-action">{stats.avgWeight}</div>
-              <div className="text-xs text-label-text uppercase tracking-wide">Avg Weight (30d)</div>
-            </div>
-
-            <div className="card text-center space-y-2">
-              <div className="text-3xl font-bold text-warning">{stats.daysLogged}</div>
-              <div className="text-xs text-label-text uppercase tracking-wide">Days Logged</div>
+            {/* Time Period Selector */}
+            <div className="flex items-center justify-center gap-2 flex-wrap">
+              <button className="px-4 py-2 rounded-full bg-primary-action/20 text-primary-action text-sm font-medium">
+                1D
+              </button>
+              <button className="px-4 py-2 rounded-full hover:bg-white/5 text-label-text text-sm">
+                1W
+              </button>
+              <button className="px-4 py-2 rounded-full hover:bg-white/5 text-label-text text-sm">
+                1M
+              </button>
+              <button className="px-4 py-2 rounded-full hover:bg-white/5 text-label-text text-sm">
+                3M
+              </button>
+              <button className="px-4 py-2 rounded-full hover:bg-white/5 text-label-text text-sm">
+                6M
+              </button>
+              <button className="px-4 py-2 rounded-full hover:bg-white/5 text-label-text text-sm">
+                1Y
+              </button>
+              <button className="px-4 py-2 rounded-full hover:bg-white/5 text-label-text text-sm">
+                All
+              </button>
             </div>
           </div>
         )}
 
         {/* Weight Chart */}
         {chartData.length > 0 ? (
-          <div className="card-glass space-y-4">
-            <h2 className="text-xl font-bold">30-Day Weight Trend</h2>
-
-            <div className="h-80">
+          <div className="space-y-4">
+            <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#8A8F98" opacity={0.1} />
                   <XAxis
                     dataKey="date"
                     stroke="#8A8F98"
                     style={{ fontSize: '12px' }}
+                    axisLine={false}
+                    tickLine={false}
                   />
-                  <YAxis
-                    stroke="#8A8F98"
-                    style={{ fontSize: '12px' }}
-                    domain={['dataMin - 2', 'dataMax + 2']}
-                  />
+                  <YAxis hide domain={['dataMin - 5', 'dataMax + 5']} />
                   <Tooltip
                     contentStyle={{
                       backgroundColor: '#1A1D20',
                       border: '1px solid rgba(255,255,255,0.1)',
-                      borderRadius: '8px',
+                      borderRadius: '12px',
                       color: '#C9CDD2',
+                      padding: '8px 12px',
                     }}
-                    labelStyle={{ color: '#8A8F98' }}
+                    labelStyle={{ color: '#8A8F98', fontSize: '12px' }}
                   />
                   <Line
                     type="monotone"
                     dataKey="weight"
-                    stroke="#3A7FFF"
-                    strokeWidth={3}
-                    dot={{ fill: '#3A7FFF', r: 4 }}
-                    activeDot={{ r: 6 }}
+                    stroke="#3EB980"
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 4, fill: '#3EB980' }}
                   />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </div>
         ) : (
-          <div className="card-glass text-center space-y-4">
+          <div className="card-glass text-center space-y-4 py-12">
             <TrendingDown className="w-16 h-16 mx-auto text-label-text" />
             <h2 className="text-xl font-bold">No data yet</h2>
             <p className="text-label-text">

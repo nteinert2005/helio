@@ -111,17 +111,14 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen pb-20 bg-primary-bg">
-      {/* Header */}
-      <header className="border-b border-white/10 bg-card-bg/50 backdrop-blur-lg sticky top-0 z-10">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center gap-4">
-            <Link href="/dashboard" className="text-label-text hover:text-body-text transition-colors">
-              <ArrowLeft className="w-5 h-5" />
-            </Link>
-            <h1 className="text-xl font-bold">Settings</h1>
-          </div>
-        </div>
-      </header>
+      {/* Top Bar */}
+      <div className="px-6 py-6 flex items-center justify-between">
+        <Link href="/dashboard" className="text-label-text hover:text-body-text transition-colors">
+          <ArrowLeft className="w-5 h-5" />
+        </Link>
+        <h1 className="text-xl font-bold tracking-tight">Settings</h1>
+        <div className="w-10"></div>
+      </div>
 
       <div className="container mx-auto px-6 py-8 max-w-2xl space-y-6">
         {error && (
