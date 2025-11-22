@@ -6,11 +6,38 @@ import { Sparkles, User, Home, TrendingUp, Plus } from 'lucide-react'
 
 export default function LandingPage() {
   const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
 
-  const handleJoinWaitlist = (e) => {
+  const handleJoinWaitlist = async (e) => {
     e.preventDefault()
-    // Navigate to signup with email pre-filled
-    window.location.href = `/auth?mode=signup&email=${encodeURIComponent(email)}`
+    setLoading(true)
+    setMessage('')
+    setError('')
+
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setMessage(data.message)
+        setEmail('')
+      } else {
+        setError(data.error || 'Something went wrong')
+      }
+    } catch (err) {
+      setError('Failed to join waitlist. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -44,21 +71,39 @@ export default function LandingPage() {
             </div>
 
             {/* Email Form */}
-            <form onSubmit={handleJoinWaitlist} className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                required
-                className="flex-1 px-6 py-4 bg-card-bg border border-white/10 rounded-xl text-body-text placeholder:text-label-text focus:outline-none focus:border-primary-action transition-colors"
-              />
-              <button
-                type="submit"
-                className="px-8 py-4 bg-primary-action hover:bg-primary-action/90 text-white font-semibold rounded-xl transition-all hover:scale-105 active:scale-95"
-              >
-                Join waitlist
-              </button>
+            <form onSubmit={handleJoinWaitlist} className="space-y-3">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  disabled={loading}
+                  className="flex-1 px-6 py-4 bg-card-bg border border-white/10 rounded-xl text-body-text placeholder:text-label-text focus:outline-none focus:border-primary-action transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="px-8 py-4 bg-primary-action hover:bg-primary-action/90 text-white font-semibold rounded-xl transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                >
+                  {loading ? 'Joining...' : 'Join waitlist'}
+                </button>
+              </div>
+
+              {/* Success Message */}
+              {message && (
+                <div className="px-4 py-3 bg-success/10 border border-success/20 rounded-lg text-success text-sm">
+                  {message}
+                </div>
+              )}
+
+              {/* Error Message */}
+              {error && (
+                <div className="px-4 py-3 bg-critical/10 border border-critical/20 rounded-lg text-critical text-sm">
+                  {error}
+                </div>
+              )}
             </form>
 
             {/* Social Link */}
