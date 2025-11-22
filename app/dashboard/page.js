@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
-import { TrendingDown, TrendingUp, Minus, LogOut, Settings, BarChart3 } from 'lucide-react'
+import { User, Home, TrendingUp, Plus, Sparkles } from 'lucide-react'
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -13,7 +13,6 @@ export default function DashboardPage() {
   const [todayLog, setTodayLog] = useState(null)
   const [yesterdayLog, setYesterdayLog] = useState(null)
   const [insight, setInsight] = useState(null)
-  const [weeklyData, setWeeklyData] = useState([])
 
   useEffect(() => {
     checkUserAndLoadData()
@@ -21,7 +20,6 @@ export default function DashboardPage() {
 
   const checkUserAndLoadData = async () => {
     try {
-      // Check authentication
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) {
         router.push('/auth?mode=login')
@@ -30,7 +28,6 @@ export default function DashboardPage() {
 
       setUser(user)
 
-      // Check if user has profile
       const { data: profile } = await supabase
         .from('user_profiles')
         .select('*')
@@ -42,7 +39,6 @@ export default function DashboardPage() {
         return
       }
 
-      // Load today's log
       const today = new Date().toISOString().split('T')[0]
       const { data: todayData } = await supabase
         .from('daily_logs')
@@ -56,7 +52,6 @@ export default function DashboardPage() {
         setInsight(todayData.insights[0])
       }
 
-      // Load yesterday's log
       const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
       const { data: yesterdayData } = await supabase
         .from('daily_logs')
@@ -66,27 +61,11 @@ export default function DashboardPage() {
         .single()
 
       setYesterdayLog(yesterdayData)
-
-      // Load weekly data for chart
-      const weekAgo = new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0]
-      const { data: weeklyLogs } = await supabase
-        .from('daily_logs')
-        .select('log_date, weight')
-        .eq('user_id', user.id)
-        .gte('log_date', weekAgo)
-        .order('log_date', { ascending: true })
-
-      setWeeklyData(weeklyLogs || [])
     } catch (error) {
       console.error('Error loading dashboard:', error)
     } finally {
       setLoading(false)
     }
-  }
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.push('/')
   }
 
   const getWeightChange = () => {
@@ -95,123 +74,196 @@ export default function DashboardPage() {
     return {
       value: Math.abs(change).toFixed(1),
       direction: change > 0 ? 'up' : change < 0 ? 'down' : 'same',
+      sign: change > 0 ? '+' : change < 0 ? '-' : ''
     }
   }
 
   const weightChange = getWeightChange()
+  const currentDate = new Date()
+  const greeting = currentDate.getHours() < 12 ? 'good morning.' :
+                   currentDate.getHours() < 18 ? 'good afternoon.' : 'good evening.'
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-label-text">Loading your dashboard...</div>
+      <div className="min-h-screen flex items-center justify-center bg-primary-bg">
+        <div className="text-label-text animate-pulse">loading...</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen pb-20">
-      {/* Header */}
-      <header className="border-b border-white/10 bg-card-bg/50 backdrop-blur-lg sticky top-0 z-10">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold gradient-text">HelioIQ</h1>
-            <div className="flex items-center gap-4">
-              <Link href="/trends" className="text-label-text hover:text-body-text transition-colors">
-                <BarChart3 className="w-5 h-5" />
-              </Link>
-              <Link href="/settings" className="text-label-text hover:text-body-text transition-colors">
-                <Settings className="w-5 h-5" />
-              </Link>
+    <div className="min-h-screen bg-primary-bg">
+      {/* Minimal Header */}
+      <div className="px-6 py-6 flex items-center justify-between">
+        <div className="text-label-text text-sm">
+          {todayLog ? `${todayLog.weight} lbs` : '0.0 lbs'}
+        </div>
+        <h1 className="text-2xl font-bold tracking-tight">{greeting}</h1>
+        <Link href="/settings" className="w-10 h-10 rounded-full bg-card-bg flex items-center justify-center">
+          <User className="w-5 h-5 text-body-text" />
+        </Link>
+      </div>
+
+      {/* Week Calendar */}
+      <div className="px-6 py-4">
+        <div className="flex items-center justify-between max-w-md mx-auto">
+          {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day, index) => {
+            const date = new Date()
+            date.setDate(date.getDate() - date.getDay() + index)
+            const isToday = date.toDateString() === currentDate.toDateString()
+            const dateString = date.toISOString().split('T')[0]
+
+            const handleDateClick = () => {
+              router.push(`/log?date=${dateString}`)
+            }
+
+            return (
               <button
-                onClick={handleSignOut}
-                className="text-label-text hover:text-body-text transition-colors"
+                key={day}
+                onClick={handleDateClick}
+                className="flex flex-col items-center gap-1 hover:scale-110 transition-transform active:scale-95"
               >
-                <LogOut className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-6 py-8 max-w-4xl space-y-8">
-        {/* Today's Weight */}
-        <div className="text-center space-y-4 animate-fade-in">
-          {todayLog ? (
-            <>
-              <div className="hero-metric">{todayLog.weight}</div>
-              <div className="text-label-text text-lg">lbs today</div>
-
-              {weightChange && (
-                <div className="flex items-center justify-center gap-2 text-lg">
-                  {weightChange.direction === 'up' && (
-                    <TrendingUp className="w-5 h-5 text-critical" />
-                  )}
-                  {weightChange.direction === 'down' && (
-                    <TrendingDown className="w-5 h-5 text-success" />
-                  )}
-                  {weightChange.direction === 'same' && (
-                    <Minus className="w-5 h-5 text-label-text" />
-                  )}
-                  <span className={`font-medium ${
-                    weightChange.direction === 'up' ? 'text-critical' :
-                    weightChange.direction === 'down' ? 'text-success' :
-                    'text-label-text'
-                  }`}>
-                    {weightChange.value} lbs from yesterday
-                  </span>
+                <div className={`text-xs ${isToday ? 'text-body-text' : 'text-label-text'}`}>
+                  {day}
                 </div>
-              )}
-            </>
-          ) : (
-            <>
-              <div className="text-4xl font-bold text-label-text">No data yet</div>
-              <Link href="/log" className="btn-primary inline-block mt-4">
-                Log Today&apos;s Metrics
-              </Link>
-            </>
-          )}
+                <div className={`text-sm font-medium ${isToday ? 'text-body-text bg-primary-action/20 px-3 py-1 rounded-full' : 'text-label-text'}`}>
+                  {date.getDate()}
+                </div>
+              </button>
+            )
+          })}
         </div>
+      </div>
 
-        {/* Today's Insight */}
-        {insight && (
-          <div className="card-glass space-y-6 animate-slide-up">
-            <h2 className="text-xl font-bold">Today&apos;s Insight</h2>
-
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-sm font-medium text-primary-action mb-2">Why this happened</h3>
-                <p className="text-body-text leading-relaxed">{insight.reason}</p>
+      {/* Main Card */}
+      <div className="px-6 py-8 mt-8">
+        <div className="max-w-2xl mx-auto">
+          {todayLog && insight ? (
+            // Insight Card
+            <div className="bg-card-bg rounded-3xl p-12 text-center space-y-8 min-h-[400px] flex flex-col justify-center">
+              <div className="space-y-2">
+                <div className="text-label-text text-sm uppercase tracking-widest">
+                  Today&apos;s Insight
+                </div>
+                <h2 className="text-3xl font-bold leading-tight px-4">
+                  {insight.reason}
+                </h2>
               </div>
 
+              <button
+                onClick={() => router.push('/log')}
+                className="mx-auto px-12 py-4 bg-white text-primary-bg rounded-full font-medium text-lg hover:scale-105 transition-transform"
+              >
+                Update
+              </button>
+            </div>
+          ) : todayLog && !insight ? (
+            // Welcome Card (First Day)
+            <div className="bg-card-bg rounded-3xl p-12 text-center space-y-8 min-h-[400px] flex flex-col justify-center">
+              <div className="space-y-2">
+                <div className="text-label-text text-sm uppercase tracking-widest">
+                  Day 1
+                </div>
+                <h2 className="text-3xl font-bold leading-tight px-4">
+                  Welcome to your journey!
+                </h2>
+              </div>
+
+              <p className="text-body-text text-lg max-w-md mx-auto">
+                Your first insight will appear tomorrow
+              </p>
+
+              <button
+                onClick={() => router.push('/log')}
+                className="mx-auto px-12 py-4 bg-white text-primary-bg rounded-full font-medium text-lg hover:scale-105 transition-transform"
+              >
+                Update
+              </button>
+            </div>
+          ) : (
+            // Empty State - Begin
+            <div className="bg-card-bg rounded-3xl p-12 text-center space-y-8 min-h-[400px] flex flex-col justify-center">
+              <div className="space-y-2">
+                <div className="text-label-text text-sm uppercase tracking-widest">
+                  Daily Check-In
+                </div>
+                <h2 className="text-3xl font-bold leading-tight px-4">
+                  New day, fresh start!
+                </h2>
+              </div>
+
+              <button
+                onClick={() => router.push('/log')}
+                className="mx-auto px-12 py-4 bg-white text-primary-bg rounded-full font-medium text-lg hover:scale-105 transition-transform"
+              >
+                Begin
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Bottom Reflection Section (if insight exists) */}
+      {insight && (
+        <div className="px-6 py-8 mt-4">
+          <div className="max-w-2xl mx-auto bg-white/5 rounded-3xl p-8 space-y-6">
+            <div className="space-y-4">
               <div>
-                <h3 className="text-sm font-medium text-success mb-2">Your trend</h3>
+                <h3 className="text-success text-sm font-medium mb-2">Your Trend</h3>
                 <p className="text-body-text leading-relaxed">{insight.trend_interpretation}</p>
               </div>
 
               <div>
-                <h3 className="text-sm font-medium text-warning mb-2">Focus today</h3>
+                <h3 className="text-warning text-sm font-medium mb-2">Focus Today</h3>
                 <p className="text-body-text leading-relaxed">{insight.focus_today}</p>
               </div>
             </div>
-          </div>
-        )}
 
-        {/* No insight yet - first day */}
-        {todayLog && !insight && (
-          <div className="card-glass text-center space-y-4">
-            <h2 className="text-xl font-bold">Welcome to HelioIQ!</h2>
-            <p className="text-label-text">
-              Your first insight will be generated tomorrow after you log your second day.
-              Keep logging daily to track your progress!
-            </p>
+            <button
+              onClick={() => router.push('/trends')}
+              className="w-full px-6 py-3 border border-white/10 rounded-full text-body-text font-medium hover:bg-white/5 transition-colors"
+            >
+              View All Insights
+            </button>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* CTA */}
-        <div className="text-center pt-4">
-          <Link href="/log" className="btn-primary inline-block">
-            {todayLog ? "Update Today&apos;s Log" : "Log Today&apos;s Metrics"}
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-card-bg/80 backdrop-blur-xl border-t border-white/5 pb-safe">
+        <div className="max-w-md mx-auto px-6 py-4 flex items-center justify-around">
+          <Link href="/dashboard" className="flex flex-col items-center gap-1">
+            <Home className="w-6 h-6 text-body-text" />
+            <span className="text-xs text-body-text font-medium">Today</span>
           </Link>
+
+          <Link href="/trends" className="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
+            <TrendingUp className="w-6 h-6 text-label-text" />
+            <span className="text-xs text-label-text">Trends</span>
+          </Link>
+
+          <Link href="/log" className="relative -top-4">
+            <div className="w-16 h-16 rounded-full bg-primary-action flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+              <Plus className="w-8 h-8 text-white" strokeWidth={2.5} />
+            </div>
+          </Link>
+
+          <Link href="/insights" className="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
+            <Sparkles className="w-6 h-6 text-label-text" />
+            <span className="text-xs text-label-text">Insights</span>
+          </Link>
+
+          <Link href="/settings" className="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
+            <User className="w-6 h-6 text-label-text" />
+            <span className="text-xs text-label-text">Settings</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Stoic-style Footer */}
+      <div className="pb-32 pt-8 text-center">
+        <div className="text-label-text text-xs uppercase tracking-widest">
+          Powered by HelioIQ
         </div>
       </div>
     </div>

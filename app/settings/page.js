@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
-import { ArrowLeft, User, Pill, Trash2, ChevronRight } from 'lucide-react'
+import { ArrowLeft, User, Pill, Trash2, ChevronRight, Home, TrendingUp, Plus, Sparkles } from 'lucide-react'
 
 export default function SettingsPage() {
   const router = useRouter()
@@ -109,7 +109,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-20 bg-primary-bg">
       {/* Header */}
       <header className="border-b border-white/10 bg-card-bg/50 backdrop-blur-lg sticky top-0 z-10">
         <div className="container mx-auto px-6 py-4">
@@ -308,6 +308,37 @@ export default function SettingsPage() {
           <p className="text-xs text-label-text">
             This action cannot be undone. All your data will be permanently deleted.
           </p>
+        </div>
+      </div>
+
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-card-bg/80 backdrop-blur-xl border-t border-white/5 pb-safe">
+        <div className="max-w-md mx-auto px-6 py-4 flex items-center justify-around">
+          <Link href="/dashboard" className="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
+            <Home className="w-6 h-6 text-label-text" />
+            <span className="text-xs text-label-text">Today</span>
+          </Link>
+
+          <Link href="/trends" className="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
+            <TrendingUp className="w-6 h-6 text-label-text" />
+            <span className="text-xs text-label-text">Trends</span>
+          </Link>
+
+          <Link href="/log" className="relative -top-4">
+            <div className="w-16 h-16 rounded-full bg-primary-action flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+              <Plus className="w-8 h-8 text-white" strokeWidth={2.5} />
+            </div>
+          </Link>
+
+          <Link href="/insights" className="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
+            <Sparkles className="w-6 h-6 text-label-text" />
+            <span className="text-xs text-label-text">Insights</span>
+          </Link>
+
+          <Link href="/settings" className="flex flex-col items-center gap-1">
+            <User className="w-6 h-6 text-body-text" />
+            <span className="text-xs text-body-text font-medium">Settings</span>
+          </Link>
         </div>
       </div>
     </div>
