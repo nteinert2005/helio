@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { X } from 'lucide-react'
@@ -16,7 +16,7 @@ const LOG_STEPS = [
   { id: 'medication', label: 'Medication', unit: '' },
 ]
 
-export default function LogPage() {
+function LogPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [loading, setLoading] = useState(true)
@@ -472,5 +472,17 @@ export default function LogPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function LogPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-primary-bg">
+        <div className="text-label-text animate-pulse">loading...</div>
+      </div>
+    }>
+      <LogPageContent />
+    </Suspense>
   )
 }
