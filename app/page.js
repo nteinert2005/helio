@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Sparkles, User, Home, TrendingUp, Plus } from 'lucide-react'
+import Image from 'next/image'
 
 export default function LandingPage() {
   const [email, setEmail] = useState('')
@@ -49,9 +50,7 @@ export default function LandingPage() {
           <div className="space-y-8 max-w-xl lg:order-1 order-1">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-action to-purple-600 flex items-center justify-center">
-                <Sparkles className="w-7 h-7 text-white" />
-              </div>
+              <Image src="/icons/icon.png" width="80" height={80} alt="" /> 
               <h1 className="text-2xl font-bold tracking-tight">Helio</h1>
             </div>
 
@@ -59,13 +58,13 @@ export default function LandingPage() {
             <div className="space-y-4">
               <h2 className="text-5xl md:text-6xl font-black tracking-tight leading-tight">
                 Daily Insights to <br />
-                <span className="bg-gradient-to-r from-primary-action to-purple-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-primary-action to-yellow bg-clip-text text-transparent">
                   Decode Your Weight Journey
                 </span>
               </h2>
 
               <p className="text-xl text-body-text leading-relaxed">
-                Log in seconds. Understand your habits. Unlock actionable insights powered by AI.
+                Log in seconds. Understand your habits. Unlock actionable insights powered by science.
               </p>
             </div>
 
@@ -203,7 +202,7 @@ export default function LandingPage() {
                   <div className="w-5 h-5 rounded-full bg-primary-action/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <div className="w-2 h-2 rounded-full bg-primary-action"></div>
                   </div>
-                  <p className="text-body-text"><span className="font-semibold text-white">AI-powered insights.</span> Discover the &quot;why&quot; behind your weight fluctuations with personalized, science-backed explanations.</p>
+                  <p className="text-body-text"><span className="font-semibold text-white">Research-powered insights.</span> Discover the &quot;why&quot; behind your weight fluctuations with personalized, science-backed explanations.</p>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-warning/20 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -213,6 +212,12 @@ export default function LandingPage() {
                 </li>
               </ul>
             </div>
+            
+            <a className='flex' href="https://helioiq.canny.io/feature-requests">
+            <button className='px-4 py-4 bg-primary-action rounded-xl text-white font-semibold'>
+              Missing a feature? Request it here. 
+            </button>
+            </a>
 
             {/* Testimonial Quote */}
             <div className="py-4 border-l-2 border-primary-action pl-4 space-y-2">

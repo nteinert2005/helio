@@ -12,7 +12,8 @@ module.exports = {
         // HelioIQ Dark Mode Palette
         'primary-bg': '#101214',
         'card-bg': '#1A1D20',
-        'primary-action': '#3A7FFF',
+        'primary-action': '#d48770',
+        'yellow': "#e6ba81",
         'success': '#3EB980',
         'warning': '#FFB85C',
         'critical': '#FF6F6F',
