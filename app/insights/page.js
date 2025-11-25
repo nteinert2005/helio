@@ -204,20 +204,31 @@ export default function InsightsPage() {
                     <p className="text-body-text leading-relaxed">{insight.focus_today}</p>
                   </div>
 
-                  {insight.triggered_rules && insight.triggered_rules.length > 0 && (
-                    <div className="pt-4 border-t border-white/5">
-                      <div className="flex flex-wrap gap-2">
-                        {insight.triggered_rules.map((rule, idx) => (
-                          <div
-                            key={idx}
-                            className="px-3 py-1 rounded-full bg-white/5 text-xs text-label-text"
-                          >
-                            {rule.message}
-                          </div>
-                        ))}
+                  {(() => {
+                    // Handle both string (old format) and array (new format)
+                    let rules = insight.triggered_rules;
+                    if (typeof rules === 'string') {
+                      try {
+                        rules = JSON.parse(rules);
+                      } catch (e) {
+                        rules = [];
+                      }
+                    }
+                    return rules && Array.isArray(rules) && rules.length > 0 && (
+                      <div className="pt-4 border-t border-white/5">
+                        <div className="flex flex-wrap gap-2">
+                          {rules.map((rule, idx) => (
+                            <div
+                              key={idx}
+                              className="px-3 py-1 rounded-full bg-white/5 text-xs text-label-text"
+                            >
+                              {rule.message}
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    );
+                  })()}
                 </div>
               </div>
             ))}

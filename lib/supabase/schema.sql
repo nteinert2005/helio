@@ -106,6 +106,11 @@ CREATE POLICY "Service can insert insights"
   ON insights FOR INSERT
   WITH CHECK (true);
 
+CREATE POLICY "Service can update insights"
+  ON insights FOR UPDATE
+  USING (true)
+  WITH CHECK (true);
+
 -- Updated_at trigger function
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$

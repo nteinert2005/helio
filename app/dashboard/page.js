@@ -13,6 +13,7 @@ export default function DashboardPage() {
   const [todayLog, setTodayLog] = useState(null)
   const [yesterdayLog, setYesterdayLog] = useState(null)
   const [insight, setInsight] = useState(null)
+  const [previousInsight, setPreviousInsight] = useState(null)
 
   useEffect(() => {
     checkUserAndLoadData()
@@ -40,16 +41,33 @@ export default function DashboardPage() {
       }
 
       const today = new Date().toISOString().split('T')[0]
-      const { data: todayData } = await supabase
+      const { data: todayData, error: todayError } = await supabase
         .from('daily_logs')
-        .select('*, insights(*)')
+        .select('*')
         .eq('user_id', user.id)
         .eq('log_date', today)
         .single()
 
+      if (todayError) {
+        console.log('No log for today:', todayError.message)
+      }
+
       setTodayLog(todayData)
-      if (todayData?.insights?.[0]) {
-        setInsight(todayData.insights[0])
+
+      // Fetch insight separately if today's log exists
+      if (todayData) {
+        const { data: insightData, error: insightError } = await supabase
+          .from('insights')
+          .select('*')
+          .eq('daily_log_id', todayData.id)
+          .single()
+
+        if (insightError) {
+          console.log('No insight for today:', insightError.message)
+        } else if (insightData) {
+          setInsight(insightData)
+          console.log('Set today insight:', insightData)
+        }
       }
 
       const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
@@ -61,6 +79,20 @@ export default function DashboardPage() {
         .single()
 
       setYesterdayLog(yesterdayData)
+
+      // If no today log but yesterday exists, fetch yesterday's insight
+      if (!todayData && yesterdayData) {
+        const { data: yesterdayInsightData } = await supabase
+          .from('insights')
+          .select('*')
+          .eq('daily_log_id', yesterdayData.id)
+          .single()
+
+        if (yesterdayInsightData) {
+          setPreviousInsight(yesterdayInsightData)
+          console.log('Set previous insight:', yesterdayInsightData)
+        }
+      }
     } catch (error) {
       console.error('Error loading dashboard:', error)
     } finally {
@@ -135,99 +167,145 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Main Card */}
-      <div className="px-6 py-8 mt-8">
-        <div className="max-w-2xl mx-auto">
-          {todayLog && insight ? (
-            // Insight Card
-            <div className="bg-card-bg rounded-3xl p-12 text-center space-y-8 min-h-[400px] flex flex-col justify-center">
-              <div className="space-y-2">
-                <div className="text-label-text text-sm uppercase tracking-widest">
-                  Today&apos;s Insight
-                </div>
-                <h2 className="text-3xl font-bold leading-tight px-4">
-                  {insight.reason}
-                </h2>
-              </div>
+      {/* Circular Progress & Optimize */}
+      <div className="px-6 py-12 flex flex-col items-center justify-center">
+        <div className="relative w-64 h-64">
+          {/* Circular Progress Ring */}
+          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 200 200">
+            {/* Background Circle */}
+            <circle
+              cx="100"
+              cy="100"
+              r="85"
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.05)"
+              strokeWidth="8"
+            />
+            {/* Progress Circle - Using primary-action color */}
+            <circle
+              cx="100"
+              cy="100"
+              r="85"
+              fill="none"
+              stroke="#c98b75"
+              strokeWidth="8"
+              strokeLinecap="round"
+              strokeDasharray={`${(todayLog ? 75 : 50) * 5.34} 534`}
+              className="transition-all duration-1000 ease-out"
+            />
+          </svg>
 
-              <button
-                onClick={() => router.push('/log')}
-                className="mx-auto px-12 py-4 bg-white text-primary-bg rounded-full font-medium text-lg hover:scale-105 transition-transform"
-              >
-                Update
-              </button>
+          {/* Center Content */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <div className="text-7xl font-black tracking-tight">
+              {todayLog ? '75' : '50'}
+              <span className="text-3xl text-label-text">%</span>
             </div>
-          ) : todayLog && !insight ? (
-            // Welcome Card (First Day)
-            <div className="bg-card-bg rounded-3xl p-12 text-center space-y-8 min-h-[400px] flex flex-col justify-center">
-              <div className="space-y-2">
-                <div className="text-label-text text-sm uppercase tracking-widest">
-                  Day 1
-                </div>
-                <h2 className="text-3xl font-bold leading-tight px-4">
-                  Welcome to your journey!
-                </h2>
-              </div>
+          </div>
+        </div>
 
-              <p className="text-body-text text-lg max-w-md mx-auto">
-                Your first insight will appear tomorrow
-              </p>
+        {/* Optimize Button */}
+        <button
+          onClick={() => insight ? router.push('/insights') : router.push('/log')}
+          className="mt-8 px-12 py-3 bg-white/10 border border-white/20 text-body-text rounded-full font-medium hover:bg-white/20 transition-colors"
+        >
+          {insight ? 'view insights' : 'optimize'}
+        </button>
+      </div>
 
-              <button
-                onClick={() => router.push('/log')}
-                className="mx-auto px-12 py-4 bg-white text-primary-bg rounded-full font-medium text-lg hover:scale-105 transition-transform"
-              >
-                Update
-              </button>
+      {/* Quick Action Cards */}
+      <div className="px-6 py-4">
+        <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+          {/* Log Today Card */}
+          <button
+            onClick={() => router.push('/log')}
+            className="bg-card-bg/50 rounded-2xl p-6 flex flex-col items-center gap-3 hover:bg-card-bg transition-colors"
+          >
+            <div className="w-12 h-12 rounded-xl bg-[#c98b75]/10 flex items-center justify-center">
+              <Plus className="w-6 h-6" style={{ color: '#c98b75' }} />
             </div>
-          ) : (
-            // Empty State - Begin
-            <div className="bg-card-bg rounded-3xl p-12 text-center space-y-8 min-h-[400px] flex flex-col justify-center">
-              <div className="space-y-2">
-                <div className="text-label-text text-sm uppercase tracking-widest">
-                  Daily Check-In
-                </div>
-                <h2 className="text-3xl font-bold leading-tight px-4">
-                  New day, fresh start!
-                </h2>
+            <div className="text-center">
+              <div className="text-sm font-medium text-body-text">Log</div>
+              <div className="text-xs text-label-text mt-1">
+                {todayLog ? 'Update' : 'Add today'}
               </div>
-
-              <button
-                onClick={() => router.push('/log')}
-                className="mx-auto px-12 py-4 bg-white text-primary-bg rounded-full font-medium text-lg hover:scale-105 transition-transform"
-              >
-                Begin
-              </button>
             </div>
-          )}
+          </button>
+
+          {/* View Trends Card */}
+          <button
+            onClick={() => router.push('/trends')}
+            className="bg-card-bg/50 rounded-2xl p-6 flex flex-col items-center gap-3 hover:bg-card-bg transition-colors"
+          >
+            <div className="w-12 h-12 rounded-xl bg-[#c98b75]/10 flex items-center justify-center">
+              <TrendingUp className="w-6 h-6" style={{ color: '#c98b75' }} />
+            </div>
+            <div className="text-center">
+              <div className="text-sm font-medium text-body-text">Trends</div>
+              <div className="text-xs text-label-text mt-1">View history</div>
+            </div>
+          </button>
+
+          {/* Insights Card */}
+          <button
+            onClick={() => router.push('/insights')}
+            className="bg-card-bg/50 rounded-2xl p-6 flex flex-col items-center gap-3 hover:bg-card-bg transition-colors"
+          >
+            <div className="w-12 h-12 rounded-xl bg-[#c98b75]/10 flex items-center justify-center">
+              <Sparkles className="w-6 h-6" style={{ color: '#c98b75' }} />
+            </div>
+            <div className="text-center">
+              <div className="text-sm font-medium text-body-text">Insights</div>
+              <div className="text-xs text-label-text mt-1">
+                {insight ? 'Available' : 'Pending'}
+              </div>
+            </div>
+          </button>
         </div>
       </div>
 
-      {/* Bottom Reflection Section (if insight exists) */}
+      {/* Insight Summary Cards */}
       {insight && (
-        <div className="px-6 py-8 mt-4">
-          <div className="max-w-2xl mx-auto bg-white/5 rounded-3xl p-8 space-y-6">
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-success text-sm font-medium mb-2">Your Trend</h3>
-                <p className="text-body-text leading-relaxed">{insight.trend_interpretation}</p>
+        <div className="px-6 py-4 space-y-3">
+          <div className="max-w-2xl mx-auto space-y-3">
+            {/* Why Card */}
+            <div className="bg-card-bg/50 rounded-2xl p-6 flex items-start gap-4">
+              <div className="w-10 h-10 rounded-xl bg-[#c98b75]/10 flex items-center justify-center flex-shrink-0">
+                <Sparkles className="w-5 h-5" style={{ color: '#c98b75' }} />
               </div>
-
-              <div>
-                <h3 className="text-warning text-sm font-medium mb-2">Focus Today</h3>
-                <p className="text-body-text leading-relaxed">{insight.focus_today}</p>
+              <div className="flex-1">
+                <div className="text-sm font-medium text-body-text mb-2">Weight insight</div>
+                <div className="text-sm text-label-text leading-relaxed">{insight.reason}</div>
               </div>
             </div>
 
-            <button
-              onClick={() => router.push('/trends')}
-              className="w-full px-6 py-3 border border-white/10 rounded-full text-body-text font-medium hover:bg-white/5 transition-colors"
-            >
-              View All Insights
-            </button>
+            {/* Focus Card */}
+            <div className="bg-card-bg/50 rounded-2xl p-6 flex items-start gap-4">
+              <div className="w-10 h-10 rounded-xl bg-[#c98b75]/10 flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5" style={{ color: '#c98b75' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <div className="text-sm font-medium text-body-text mb-2">Focus today</div>
+                <div className="text-sm text-label-text leading-relaxed">{insight.focus_today}</div>
+              </div>
+            </div>
           </div>
         </div>
       )}
+
+      {/* No Insight State */}
+      {todayLog && !insight && (
+        <div className="px-6 py-4">
+          <div className="max-w-2xl mx-auto bg-card-bg/50 rounded-2xl p-8 text-center">
+            <div className="text-label-text text-sm mb-2">Day 1</div>
+            <div className="text-body-text font-medium mb-2">Welcome to your journey!</div>
+            <div className="text-label-text text-sm">Your first insight will appear tomorrow</div>
+          </div>
+        </div>
+      )}
+
 
       {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-card-bg/80 backdrop-blur-xl border-t border-white/5 pb-safe">
