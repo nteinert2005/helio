@@ -296,9 +296,10 @@ Example response format:
 ---
 
 ## IMPORTANT NOTES FOR DEVELOPING
-- Always read `BRAND_VOICE.md` when creating text to make sure that the brand voice is consistent. 
-- Always check single and double quote are escaped and don't effect build issues. 
-- Always follow `VERSIONING.md` after you make changes to update the version to the most current version.  
+- DO always read `BRAND_VOICE.md` when creating text to make sure that the brand voice is consistent. 
+- DO always check single and double quote are escaped and don't effect build issues. 
+- DO always follow `VERSIONING.md` after you make changes to update the version to the most current version.  
+- When committing code, DO NOT include anything about Claude Code or co-written with Claude Code. 
 
 ---
 

@@ -7,7 +7,9 @@
       "Bash(dir /s /b c:UsersNickDesktophelioiqapp*insights* 2)",
       "Bash(nul)",
       "Bash(dir /s /b c:UsersNickDesktophelioiqapp*insights*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []

@@ -13,6 +13,8 @@ export default function InsightsPage() {
   const [user, setUser] = useState(null)
   const [insights, setInsights] = useState([])
   const [todayLog, setTodayLog] = useState(null)
+  const [testResult, setTestResult] = useState(null)
+  const isDevelopment = process.env.NODE_ENV === 'development'
 
   useEffect(() => {
     checkUserAndLoadData()
@@ -89,6 +91,40 @@ export default function InsightsPage() {
     }
   }
 
+  const handleTestGenerate = async () => {
+    if (!todayLog) {
+      alert('Please log your metrics for today first')
+      return
+    }
+
+    setGenerating(true)
+    setTestResult(null)
+    try {
+      const response = await fetch('/api/insights/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ daily_log_id: todayLog.id }),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to generate insight')
+      }
+
+      setTestResult(result)
+      console.log('Test Result:', result)
+
+      // Reload insights
+      await checkUserAndLoadData()
+    } catch (error) {
+      console.error('Error testing insight generation:', error)
+      setTestResult({ error: error.message })
+    } finally {
+      setGenerating(false)
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-primary-bg">
@@ -111,6 +147,57 @@ export default function InsightsPage() {
           <User className="w-5 h-5 text-body-text" />
         </Link>
       </div>
+
+      {/* Development Test Button */}
+      {isDevelopment && todayLog && (
+        <div className="px-6 pb-4">
+          <div className="card-glass space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-label-text font-medium">DEV MODE</span>
+              <button
+                onClick={handleTestGenerate}
+                disabled={generating}
+                className="px-4 py-2 bg-warning text-primary-bg rounded-lg text-xs font-medium hover:scale-105 transition-transform disabled:opacity-50"
+              >
+                {generating ? 'Testing...' : 'Test Generate'}
+              </button>
+            </div>
+
+            {testResult && (
+              <div className="space-y-2">
+                {testResult.error ? (
+                  <div className="p-3 bg-critical/10 border border-critical/20 rounded-lg">
+                    <div className="text-xs text-critical font-medium">Error:</div>
+                    <div className="text-xs text-body-text mt-1">{testResult.error}</div>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {/* Stability Score */}
+                    {testResult.insights?.stabilityScore !== undefined && (
+                      <div className="p-3 bg-success/10 border border-success/20 rounded-lg">
+                        <div className="text-xs text-success font-medium">Stability Score</div>
+                        <div className="text-lg font-bold text-body-text mt-1">
+                          {testResult.insights.stabilityScore}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Other Scores/Data */}
+                    {testResult.insights && (
+                      <div className="p-3 bg-primary-action/10 border border-primary-action/20 rounded-lg">
+                        <div className="text-xs text-primary-action font-medium mb-2">Full Response</div>
+                        <pre className="text-xs text-body-text overflow-x-auto whitespace-pre-wrap max-h-64 overflow-y-auto">
+                          {JSON.stringify(testResult.insights, null, 2)}
+                        </pre>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Generate Insight Button */}
       {canGenerateToday && (
