@@ -14,7 +14,61 @@ export default function InsightsPage() {
   const [insights, setInsights] = useState([])
   const [todayLog, setTodayLog] = useState(null)
   const [testResult, setTestResult] = useState(null)
+  const [showMockData, setShowMockData] = useState(false)
   const isDevelopment = process.env.NODE_ENV === 'development'
+
+  // Mock insights data for testing
+  const mockInsights = [
+    {
+      id: 'mock-1',
+      created_at: new Date().toISOString(),
+      daily_logs: {
+        log_date: new Date().toISOString().split('T')[0],
+        weight: 247.8
+      },
+      reason: "Your weight dropped 0.4 lbs today, which is encouraging progress. This is primarily due to improved hydration (you hit 3.2L of water yesterday) and consistent protein intake at 145g. Your body is also responding well to your weekly semaglutide dose, and you had a normal bowel movement which helps reduce temporary water retention.",
+      trend_interpretation: "You're in week 47 of your GLP-1 journey, and this is exactly the kind of steady progress we want to see. Over the past 3 days, you've been maintaining excellent consistency with your medication adherence and nutrition. The gradual 0.8 lb decrease from two days ago shows your body is finding its rhythm. This isn't a dramatic drop, and that's actually a good thing—sustainable weight loss happens in small, consistent increments like this.",
+      focus_today: "Keep your momentum going by maintaining that high water intake (aim for another 3L+ today) and hitting your protein target of 140g+. Try to get 7+ hours of sleep tonight, as your 6.5 hours yesterday was slightly below optimal. Consider adding 2,000 more steps today to reach 8,000+ total. Your body is responding well to your current routine, so the key is consistency rather than making big changes.",
+      triggered_rules: [
+        { message: "improved hydration", severity: "info" },
+        { message: "high protein intake", severity: "info" },
+        { message: "sleep slightly below optimal", severity: "warning" }
+      ]
+    },
+    {
+      id: 'mock-2',
+      created_at: new Date(Date.now() - 86400000).toISOString(),
+      daily_logs: {
+        log_date: new Date(Date.now() - 86400000).toISOString().split('T')[0],
+        weight: 248.2
+      },
+      reason: "Your weight went up 0.4 lbs yesterday, but don't be alarmed—this is actually normal daily fluctuation. The main culprit here is reduced sleep (only 6.5 hours) which triggers cortisol release and temporary water retention. You also had constipation yesterday, which can add 1-2 lbs of temporary weight. Your steps were lower at 4,500, which means less sodium and fluid flushed through your system.",
+      trend_interpretation: "Even though today showed a small increase, your weekly trend is still downward. This kind of day-to-day variation is completely expected and doesn't mean you've gained fat. In fact, your calorie intake at 2,100 and protein at 130g were both solid. Think of weight loss like a staircase—you go down, then plateau for a bit, then drop again. You're likely in a brief plateau before your next drop.",
+      focus_today: "Your priorities today should be: 1) Get 7+ hours of sleep tonight to reduce cortisol-related water retention, 2) Increase water intake to 3L+ to help with digestion and flushing, 3) Try to add more fiber-rich foods to help with bowel movements. If you can boost your steps to 6,000+ that will help too. Remember, you took your medication yesterday, so your body is still adjusting to this week's dose.",
+      triggered_rules: [
+        { message: "low sleep cortisol spike", severity: "warning" },
+        { message: "constipation detected", severity: "warning" },
+        { message: "below optimal step count", severity: "info" }
+      ]
+    },
+    {
+      id: 'mock-3',
+      created_at: new Date(Date.now() - 172800000).toISOString(),
+      daily_logs: {
+        log_date: new Date(Date.now() - 172800000).toISOString().split('T')[0],
+        weight: 248.6
+      },
+      reason: "Your weight increased by 0.4 lbs from the previous day. The primary factors here were significantly reduced hydration (only 2.5L compared to your usual 3L+), very low sleep at 5.8 hours, and you missed your medication dose. Additionally, you had no bowel movement, which can temporarily add 1-2 lbs. Your calorie intake was higher at 2,450, but that alone wouldn't cause this uptick—it's mainly water retention from poor sleep and dehydration.",
+      trend_interpretation: "This day represents a challenging combination of factors, but it's important to remember that one difficult day doesn't derail your overall progress. Your body is extremely sensitive to sleep deprivation and hydration levels while on semaglutide. The missed medication dose also affects how your body processes food and retains water. However, this is completely recoverable with a few days of better habits.",
+      focus_today: "Today's action items: 1) Take your medication as scheduled—don't skip two days in a row, 2) Prioritize 8 hours of sleep tonight to reset your cortisol levels, 3) Drink at least 3.5L of water to compensate for yesterday's deficit, 4) Keep protein high (120g+) but bring calories back to 2,000-2,200 range. Your body needs consistency to function optimally on GLP-1 medication.",
+      triggered_rules: [
+        { message: "severe sleep deficit", severity: "critical" },
+        { message: "dehydration detected", severity: "warning" },
+        { message: "missed medication dose", severity: "critical" },
+        { message: "no bowel movement", severity: "warning" }
+      ]
+    }
+  ]
 
   useEffect(() => {
     checkUserAndLoadData()
@@ -149,18 +203,28 @@ export default function InsightsPage() {
       </div>
 
       {/* Development Test Button */}
-      {isDevelopment && todayLog && (
+      {isDevelopment && (
         <div className="px-6 pb-4">
           <div className="card-glass space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-xs text-label-text font-medium">DEV MODE</span>
-              <button
-                onClick={handleTestGenerate}
-                disabled={generating}
-                className="px-4 py-2 bg-warning text-primary-bg rounded-lg text-xs font-medium hover:scale-105 transition-transform disabled:opacity-50"
-              >
-                {generating ? 'Testing...' : 'Test Generate'}
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowMockData(!showMockData)}
+                  className="px-4 py-2 bg-success text-primary-bg rounded-lg text-xs font-medium hover:scale-105 transition-transform"
+                >
+                  {showMockData ? 'Hide Mock' : 'Show Mock'}
+                </button>
+                {todayLog && (
+                  <button
+                    onClick={handleTestGenerate}
+                    disabled={generating}
+                    className="px-4 py-2 bg-warning text-primary-bg rounded-lg text-xs font-medium hover:scale-105 transition-transform disabled:opacity-50"
+                  >
+                    {generating ? 'Testing...' : 'Test Generate'}
+                  </button>
+                )}
+              </div>
             </div>
 
             {testResult && (
@@ -214,7 +278,7 @@ export default function InsightsPage() {
       )}
 
       <div className="container mx-auto px-6 py-8 max-w-4xl">
-        {insights.length === 0 ? (
+        {(showMockData ? mockInsights : insights).length === 0 ? (
           // Empty State
           <div className="card-glass text-center space-y-6 py-16">
             <div className="w-20 h-20 mx-auto rounded-full bg-primary-action/10 flex items-center justify-center">
@@ -247,7 +311,7 @@ export default function InsightsPage() {
         ) : (
           // Insights List
           <div className="space-y-4">
-            {insights.map((insight) => (
+            {(showMockData ? mockInsights : insights).map((insight) => (
               <div key={insight.id} className="card-glass space-y-4 hover:border-primary-action/20 transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
