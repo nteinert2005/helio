@@ -26,9 +26,9 @@ export default function InsightsPage() {
         log_date: new Date().toISOString().split('T')[0],
         weight: 247.8
       },
-      reason: "Your weight dropped 0.4 lbs today, which is encouraging progress. This is primarily due to improved hydration (you hit 3.2L of water yesterday) and consistent protein intake at 145g. Your body is also responding well to your weekly semaglutide dose, and you had a normal bowel movement which helps reduce temporary water retention.",
-      trend_interpretation: "You're in week 47 of your GLP-1 journey, and this is exactly the kind of steady progress we want to see. Over the past 3 days, you've been maintaining excellent consistency with your medication adherence and nutrition. The gradual 0.8 lb decrease from two days ago shows your body is finding its rhythm. This isn't a dramatic drop, and that's actually a good thing—sustainable weight loss happens in small, consistent increments like this.",
-      focus_today: "Keep your momentum going by maintaining that high water intake (aim for another 3L+ today) and hitting your protein target of 140g+. Try to get 7+ hours of sleep tonight, as your 6.5 hours yesterday was slightly below optimal. Consider adding 2,000 more steps today to reach 8,000+ total. Your body is responding well to your current routine, so the key is consistency rather than making big changes.",
+      reason: "Down 0.4 lbs. Here's what the data is really telling you. Your hydration hit 3.2L yesterday. Protein stayed high at 145g. Normal bowel movement cleared water retention. Your weekly semaglutide dose is holding steady. This is the signal beneath the noise.",
+      trend_interpretation: "Week 47. Three days of precise execution. The 0.8 lb drop from two days ago isn't luck—it's pattern. Your process is working. Medication adherence is locked. Nutrition is consistent. This is how real progress looks: small, deliberate, compound.",
+      focus_today: "Maintain 3L+ water. Hit 140g+ protein. Sleep 7+ hours tonight—yesterday's 6.5 was below threshold. Add 2,000 steps to reach 8,000 total. Your stack is working. Don't change it. Refine it.",
       triggered_rules: [
         { message: "improved hydration", severity: "info" },
         { message: "high protein intake", severity: "info" },
@@ -42,9 +42,9 @@ export default function InsightsPage() {
         log_date: new Date(Date.now() - 86400000).toISOString().split('T')[0],
         weight: 248.2
       },
-      reason: "Your weight went up 0.4 lbs yesterday, but don't be alarmed—this is actually normal daily fluctuation. The main culprit here is reduced sleep (only 6.5 hours) which triggers cortisol release and temporary water retention. You also had constipation yesterday, which can add 1-2 lbs of temporary weight. Your steps were lower at 4,500, which means less sodium and fluid flushed through your system.",
-      trend_interpretation: "Even though today showed a small increase, your weekly trend is still downward. This kind of day-to-day variation is completely expected and doesn't mean you've gained fat. In fact, your calorie intake at 2,100 and protein at 130g were both solid. Think of weight loss like a staircase—you go down, then plateau for a bit, then drop again. You're likely in a brief plateau before your next drop.",
-      focus_today: "Your priorities today should be: 1) Get 7+ hours of sleep tonight to reduce cortisol-related water retention, 2) Increase water intake to 3L+ to help with digestion and flushing, 3) Try to add more fiber-rich foods to help with bowel movements. If you can boost your steps to 6,000+ that will help too. Remember, you took your medication yesterday, so your body is still adjusting to this week's dose.",
+      reason: "Up 0.4 lbs. This is noise, not truth. Sleep dropped to 6.5 hours—cortisol spiked. Water retention followed. Constipation added 1-2 lbs of temporary weight. Steps fell to 4,500. Less movement, less sodium flushed. Your weight didn't shift. Your patterns did.",
+      trend_interpretation: "Weekly trend: still down. This variation means nothing. Calories at 2,100. Protein at 130g. Both solid. Weight moves like a staircase—down, plateau, down again. You're between drops. This is the part most people misread.",
+      focus_today: "Sleep 7+ hours tonight. Cortisol needs reset. Push water to 3L+ for digestion. Add fiber-rich foods. Move toward 6,000 steps. Medication taken yesterday—your body is adjusting to this week's dose. Watch this pattern tomorrow.",
       triggered_rules: [
         { message: "low sleep cortisol spike", severity: "warning" },
         { message: "constipation detected", severity: "warning" },
@@ -58,9 +58,9 @@ export default function InsightsPage() {
         log_date: new Date(Date.now() - 172800000).toISOString().split('T')[0],
         weight: 248.6
       },
-      reason: "Your weight increased by 0.4 lbs from the previous day. The primary factors here were significantly reduced hydration (only 2.5L compared to your usual 3L+), very low sleep at 5.8 hours, and you missed your medication dose. Additionally, you had no bowel movement, which can temporarily add 1-2 lbs. Your calorie intake was higher at 2,450, but that alone wouldn't cause this uptick—it's mainly water retention from poor sleep and dehydration.",
-      trend_interpretation: "This day represents a challenging combination of factors, but it's important to remember that one difficult day doesn't derail your overall progress. Your body is extremely sensitive to sleep deprivation and hydration levels while on semaglutide. The missed medication dose also affects how your body processes food and retains water. However, this is completely recoverable with a few days of better habits.",
-      focus_today: "Today's action items: 1) Take your medication as scheduled—don't skip two days in a row, 2) Prioritize 8 hours of sleep tonight to reset your cortisol levels, 3) Drink at least 3.5L of water to compensate for yesterday's deficit, 4) Keep protein high (120g+) but bring calories back to 2,000-2,200 range. Your body needs consistency to function optimally on GLP-1 medication.",
+      reason: "Up 0.4 lbs. Multiple breaks in your stack. Hydration fell to 2.5L—well below your 3L+ baseline. Sleep crashed at 5.8 hours. Medication dose missed. No bowel movement. Calories at 2,450. The number isn't fat gain. It's water retention from dehydration and sleep deficit.",
+      trend_interpretation: "This day stacked errors. Missed medication changes how your body processes food and holds water. Sleep deprivation amplifies cortisol. Hydration dropped below threshold. But here's the truth: one broken day doesn't erase your trendline. It reveals blind spots.",
+      focus_today: "Take medication today. Don't skip twice. Sleep 8 hours tonight—cortisol levels need full reset. Drink 3.5L water to compensate. Protein above 120g. Calories back to 2,000-2,200 range. Semaglutide demands consistency. Rebuild your stack.",
       triggered_rules: [
         { message: "severe sleep deficit", severity: "critical" },
         { message: "dehydration detected", severity: "warning" },
