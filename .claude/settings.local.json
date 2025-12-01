@@ -6,7 +6,8 @@
       "Bash(npm run build:*)",
       "Bash(dir /s /b c:UsersNickDesktophelioiqapp*insights* 2)",
       "Bash(nul)",
-      "Bash(dir /s /b c:UsersNickDesktophelioiqapp*insights*)"
+      "Bash(dir /s /b c:UsersNickDesktophelioiqapp*insights*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

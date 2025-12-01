@@ -266,32 +266,39 @@ Example response format:
 ## Development Workflow
 
 ### Phase 1: Foundation (Week 1-2)
-- [ ] Initialize Next.js project with TailwindCSS
-- [ ] Configure Supabase project and database schema
-- [ ] Set up Supabase Auth
-- [ ] Build routing structure
-- [ ] Create dark mode color palette in Tailwind config
+- [x] Initialize Next.js project with TailwindCSS
+- [x] Configure Supabase project and database schema
+- [x] Set up Supabase Auth
+- [x] Build routing structure
+- [x] Create dark mode color palette in Tailwind config
 
 ### Phase 2: Core Features (Week 3-4)
-- [ ] Build `/log` form with validation
-- [ ] Implement rule engine functions
+- [x] Build `/log` form with validation
+- [x] Implement rule engine functions
 - [ ] Set up OpenAI API integration
-- [ ] Create insight generation flow
-- [ ] Build dashboard with basic layout
+- [x] Create insight generation flow
+- [x] Build dashboard with basic layout
 
 ### Phase 3: UI/UX (Week 5-6)
-- [ ] Implement dark mode design system
-- [ ] Add chart visualizations
-- [ ] Build trends page
-- [ ] Ensure mobile responsiveness
+- [x] Implement dark mode design system
+- [x] Add chart visualizations
+- [x] Build trends page
+- [x] Ensure mobile responsiveness
 - [ ] Polish onboarding flow
 
 ### Phase 4: Testing & Launch (Week 7-8)
 - [ ] User testing with beta users
 - [ ] Bug fixes and edge case handling
 - [ ] Performance optimization
-- [ ] Deploy to Vercel
-- [ ] Set up analytics
+- [x] Deploy to Vercel
+- [x] Set up analytics
+
+---
+
+## IMPORTANT NOTES FOR DEVELOPING
+- Always read `BRAND_VOICE.md` when creating text to make sure that the brand voice is consistent. 
+- Always check single and double quote are escaped and don't effect build issues. 
+- Always follow `VERSIONING.md` after you make changes to update the version to the most current version.  
 
 ---
 

@@ -57,38 +57,38 @@ export default function LandingPage() {
             {/* Hero Headline */}
             <div className="space-y-4">
               <h2 className="text-5xl md:text-6xl font-black tracking-tight leading-tight">
-                Daily Insights to <br />
+                Daily signals. <br />
                 <span className="bg-gradient-to-r from-primary-action to-yellow bg-clip-text text-transparent">
-                  Decode Your Weight Journey
+                  Brutal clarity.
                 </span>
               </h2>
 
               <p className="text-xl text-body-text leading-relaxed">
-                Log in seconds. Understand your habits. Unlock actionable insights powered by science.
+                See the truth beneath the fluctuations.
               </p>
             </div>
 
             {/* What is Helio Section */}
             <div className="space-y-3 py-4">
-              <h3 className="text-sm uppercase tracking-widest text-label-text font-semibold">What is Helio?</h3>
+              <h3 className="text-sm uppercase tracking-widest text-label-text font-semibold">The Process</h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-success/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <div className="w-2 h-2 rounded-full bg-success"></div>
                   </div>
-                  <p className="text-body-text"><span className="font-semibold text-white">Fast, simple logging.</span> Track your daily metrics in under 60 seconds—no complex forms or tedious data entry.</p>
+                  <p className="text-body-text"><span className="font-semibold text-white">Track once.</span> Your daily metrics. Under 60 seconds.</p>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-primary-action/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <div className="w-2 h-2 rounded-full bg-primary-action"></div>
                   </div>
-                  <p className="text-body-text"><span className="font-semibold text-white">Research-powered insights.</span> Discover the &quot;why&quot; behind your weight fluctuations with personalized, science-backed explanations.</p>
+                  <p className="text-body-text"><span className="font-semibold text-white">See the pattern.</span> Data-backed truth about your shifts.</p>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-warning/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <div className="w-2 h-2 rounded-full bg-warning"></div>
                   </div>
-                  <p className="text-body-text"><span className="font-semibold text-white">Stay on track.</span> Maintain your GLP-1 progress, avoid common pitfalls, and build healthier routines with confidence.</p>
+                  <p className="text-body-text"><span className="font-semibold text-white">Adjust with precision.</span> The signal beneath the noise.</p>
                 </li>
               </ul>
             </div>
@@ -99,24 +99,24 @@ export default function LandingPage() {
           <div className="relative flex justify-center lg:justify-end">
             <div className="relative">
               {/* Phone Frame */}
-              <div className="relative w-[320px] h-[650px] bg-gradient-to-br from-gray-900 to-black rounded-[3rem] p-3 shadow-2xl border border-white/10">
+              <div className="relative w-[320px] h-[650px] bg-gradient-to-br from-helio-obsidian to-helio-void rounded-[3rem] p-3 shadow-2xl border border-helio-ash-divider/30">
                 {/* Notch */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-black rounded-b-3xl z-10"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-helio-void rounded-b-3xl z-10"></div>
 
                 {/* Screen - Dark Background */}
-                <div className="relative w-full h-full bg-[#1a1a1a] rounded-[2.5rem] overflow-hidden">
+                <div className="relative w-full h-full bg-helio-void rounded-[2.5rem] overflow-hidden">
 
                   {/* Top Bar */}
                   <div className="absolute top-0 left-0 right-0 px-6 py-4 flex items-center justify-between">
-                    <span className="text-xs text-gray-500">0.0 lbs</span>
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
-                      <User className="w-5 h-5 text-gray-400" />
+                    <span className="text-xs text-helio-muted-titanium">0.0 lbs</span>
+                    <div className="w-8 h-8 rounded-full bg-helio-obsidian flex items-center justify-center">
+                      <User className="w-5 h-5 text-helio-muted-titanium" />
                     </div>
                   </div>
 
                   {/* Greeting */}
                   <div className="absolute top-12 left-0 right-0 text-center py-2">
-                    <h3 className="text-2xl font-bold text-white">good evening.</h3>
+                    <h3 className="text-2xl font-bold text-helio-bone">good evening.</h3>
                   </div>
 
                   {/* Week Calendar */}
@@ -132,13 +132,13 @@ export default function LandingPage() {
                         { day: 'Sa', date: '22' }
                       ].map((item, i) => (
                         <div key={i} className="flex flex-col items-center gap-1">
-                          <span className={`text-xs ${item.active ? 'text-white' : 'text-gray-500'}`}>
+                          <span className={`text-xs ${item.active ? 'text-helio-bone' : 'text-helio-muted-titanium'}`}>
                             {item.day}
                           </span>
                           <span className={`text-sm font-medium ${
                             item.active
-                              ? 'text-white bg-white/10 px-2 py-1 rounded-full'
-                              : 'text-gray-500'
+                              ? 'text-helio-bone bg-helio-solar-ember/20 px-2 py-1 rounded-full'
+                              : 'text-helio-muted-titanium'
                           }`}>
                             {item.date}
                           </span>
@@ -149,56 +149,51 @@ export default function LandingPage() {
 
                   {/* Main Card */}
                   <div className="absolute top-52 left-6 right-6">
-                    <div className="bg-[#252525] rounded-3xl px-8 py-12 text-center space-y-6">
+                    <div className="bg-helio-obsidian/80 border border-helio-ash-divider rounded-3xl px-8 py-12 text-center space-y-6">
                       <div className="space-y-2">
-                        <div className="text-gray-400 text-xs uppercase tracking-widest">
-                          DAILY CHECK-IN
+                        <div className="text-helio-muted-titanium text-xs uppercase tracking-widest">
+                          TODAY
                         </div>
-                        <h2 className="text-2xl font-bold text-white leading-tight">
-                          New day, fresh<br />start!
+                        <h2 className="text-2xl font-bold text-helio-bone leading-tight">
+                          Truth needs data.
                         </h2>
                       </div>
 
-                      <button className="mx-auto px-10 py-3 bg-white text-black rounded-full font-semibold text-base">
-                        Begin
+                      <button className="mx-auto px-10 py-3 bg-helio-solar-ember text-white rounded-full font-semibold text-base shadow-helio-glow-md">
+                        Log
                       </button>
                     </div>
                   </div>
 
-                  {/* Footer */}
-                  <div className="absolute bottom-20 left-0 right-0 text-center">
-                    <div className="text-gray-600 text-xs uppercase tracking-widest">
-                      POWERED BY HELIOIQ
-                    </div>
-                  </div>
+                 
 
                   {/* Bottom Navigation */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-[#252525]/90 backdrop-blur-xl border-t border-white/5">
+                  <div className="absolute bottom-0 left-0 right-0 bg-helio-obsidian/90 backdrop-blur-xl border-t border-helio-ash-divider">
                     <div className="px-6 py-3 flex items-center justify-around">
                       <div className="flex flex-col items-center gap-1">
-                        <Home className="w-5 h-5 text-white" />
-                        <span className="text-[10px] text-white">Today</span>
+                        <Home className="w-5 h-5 text-helio-bone" />
+                        <span className="text-[10px] text-helio-bone">Today</span>
                       </div>
 
                       <div className="flex flex-col items-center gap-1 opacity-40">
-                        <TrendingUp className="w-5 h-5 text-gray-400" />
-                        <span className="text-[10px] text-gray-400">Trends</span>
+                        <TrendingUp className="w-5 h-5 text-helio-muted-titanium" />
+                        <span className="text-[10px] text-helio-muted-titanium">Trends</span>
                       </div>
 
                       <div className="relative -top-6">
-                        <div className="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center shadow-lg">
+                        <div className="w-14 h-14 rounded-full bg-helio-solar-ember flex items-center justify-center shadow-helio-glow-strong">
                           <Plus className="w-7 h-7 text-white" strokeWidth={2.5} />
                         </div>
                       </div>
 
                       <div className="flex flex-col items-center gap-1 opacity-40">
-                        <Sparkles className="w-5 h-5 text-gray-400" />
-                        <span className="text-[10px] text-gray-400">Insights</span>
+                        <Sparkles className="w-5 h-5 text-helio-muted-titanium" />
+                        <span className="text-[10px] text-helio-muted-titanium">Insights</span>
                       </div>
 
                       <div className="flex flex-col items-center gap-1 opacity-40">
-                        <User className="w-5 h-5 text-gray-400" />
-                        <span className="text-[10px] text-gray-400">Settings</span>
+                        <User className="w-5 h-5 text-helio-muted-titanium" />
+                        <span className="text-[10px] text-helio-muted-titanium">Settings</span>
                       </div>
                     </div>
                   </div>
@@ -207,7 +202,7 @@ export default function LandingPage() {
               </div>
 
               {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-action/20 to-purple-600/20 blur-3xl -z-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-helio-solar-ember/15 to-helio-ancient-gold/10 blur-3xl -z-10"></div>
             </div>
           </div>
 
@@ -218,16 +213,16 @@ export default function LandingPage() {
 
           <a className='flex' href="https://helioiq.canny.io/feature-requests">
             <button className='px-4 py-4 bg-primary-action rounded-xl text-white font-semibold'>
-              Missing a feature? Request it here.
+              Request a feature
             </button>
           </a>
 
           {/* Testimonial Quote */}
           <div className="py-4 border-l-2 border-primary-action pl-4 space-y-2 max-w-2xl">
             <p className="text-body-text italic">
-              &quot;Finally, I understand why my weight goes up some days even when I&apos;m doing everything right. Helio takes the guesswork out of my GLP-1 journey.&quot;
+              &quot;Now I see the real story. Not guesswork. Truth.&quot;
             </p>
-            <p className="text-label-text text-sm">— Sarah M., Early Tester</p>
+            <p className="text-label-text text-sm">— Early Tester</p>
           </div>
 
           {/* Primary CTA */}
@@ -247,7 +242,7 @@ export default function LandingPage() {
                 disabled={loading}
                 className="px-8 py-4 bg-primary-action hover:bg-primary-action/90 text-white font-semibold rounded-xl transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg shadow-primary-action/30"
               >
-                {loading ? 'Joining...' : 'Join Waitlist →'}
+                {loading ? 'Processing...' : 'Join Waitlist'}
               </button>
             </div>
 
@@ -272,30 +267,29 @@ export default function LandingPage() {
               <svg className="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              <span>Secure & Private</span>
+              <span>Private</span>
             </div>
             <div className="flex items-center gap-2">
               <svg className="w-4 h-4 text-primary-action" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
               </svg>
-              <span>Join 500+ Early Testers</span>
+              <span>500+ users</span>
             </div>
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-warning" />
-              <span>Powered by HelioIQ</span>
+              <span>HelioIQ</span>
             </div>
           </div>
 
           {/* Social Link */}
           <div className="flex items-center gap-2 text-sm text-label-text">
-            <span>Follow</span>
             <a
               href="https://studio617.notion.site/Helio-2b38077a59928055a371d7f2920dbd51?source=copy_link"
               target="_blank"
               rel="noopener noreferrer"
               className="text-body-text hover:text-primary-action transition-colors inline-flex items-center gap-1"
             >
-              helio for updates
+              Updates
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
