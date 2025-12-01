@@ -105,7 +105,7 @@ export default function QuickLogWeightPage() {
 
         {/* Input */}
         <div className="mb-8">
-          <label className="block text-sm text-helio-muted-titanium mb-3">Today's Weight</label>
+          <label className="block text-sm text-helio-muted-titanium mb-3">Today&apos;s Weight</label>
           <div className="relative">
             <input
               type="number"
@@ -125,7 +125,7 @@ export default function QuickLogWeightPage() {
         {/* Info Text */}
         {existingLog && (
           <div className="mb-6 text-center text-sm text-helio-muted-titanium">
-            Updating today's weight
+            Updating today&apos;s weight
           </div>
         )}
 

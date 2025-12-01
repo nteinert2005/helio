@@ -124,7 +124,7 @@ export default function QuickLogExercisePage() {
         {/* Info Text */}
         {existingLog && (
           <div className="mb-6 text-center text-sm text-helio-muted-titanium">
-            Updating today's steps
+            Updating today&apos;s steps
           </div>
         )}
 

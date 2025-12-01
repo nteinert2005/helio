@@ -142,7 +142,7 @@ export default function QuickLogSymptomsPage() {
         {/* Info Text */}
         {existingLog && (
           <div className="mb-6 text-center text-sm text-helio-muted-titanium">
-            Updating today's symptoms
+            Updating today&apos;s symptoms
           </div>
         )}
 

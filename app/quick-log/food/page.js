@@ -124,7 +124,7 @@ export default function QuickLogFoodPage() {
         {/* Info Text */}
         {existingLog && (
           <div className="mb-6 text-center text-sm text-helio-muted-titanium">
-            Updating today's calories
+            Updating today&apos;s calories
           </div>
         )}
 

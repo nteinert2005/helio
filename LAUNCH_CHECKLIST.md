@@ -19,10 +19,10 @@ Use this checklist to ensure everything is ready before launching.
 - [ ] Icons look good at small sizes (72x72)
 - [ ] Favicon added
 - [ ] Logo/branding finalized
-- [ ] Color palette matches brand
-- [ ] Dark mode tested
+- [x] Color palette matches brand
+- [x] Dark mode tested
 - [ ] Mobile responsive on all pages
-- [ ] Animations are smooth (60fps)
+- [x] Animations are smooth (60fps)
 
 ## 🧪 Testing
 
@@ -44,13 +44,13 @@ Use this checklist to ensure everything is ready before launching.
 - [ ] Doesn't show onboarding if already completed
 
 ### Daily Logging
-- [ ] All 8 fields required
-- [ ] Decimal values accepted for weight/sleep
+- [x] All 8 fields required
+- [x] Decimal values accepted for weight/sleep
 - [ ] Shows yesterday's values
-- [ ] Can submit first log
-- [ ] Can update same day's log
-- [ ] Saves to database correctly
-- [ ] Redirects to dashboard after save
+- [x] Can submit first log
+- [x] Can update same day's log
+- [x] Saves to database correctly
+- [x] Redirects to dashboard after save
 
 ### Dashboard
 - [ ] Shows today's weight correctly
@@ -58,7 +58,7 @@ Use this checklist to ensure everything is ready before launching.
 - [ ] Shows insight after day 2+
 - [ ] Shows "No data" state on first visit
 - [ ] Shows "First day" message after day 1
-- [ ] Navigation works to all pages
+- [x] Navigation works to all pages
 - [ ] Can sign out
 
 ### AI Insights
@@ -70,11 +70,11 @@ Use this checklist to ensure everything is ready before launching.
 - [ ] Shows fallback if AI fails
 
 ### Trends Page
-- [ ] Chart displays correctly
+- [x] Chart displays correctly
 - [ ] Stats cards show accurate data
 - [ ] Past insights load
 - [ ] Empty state shows when no data
-- [ ] Chart is responsive on mobile
+- [x] Chart is responsive on mobile
 
 ### Settings Page
 - [ ] Shows current profile correctly
@@ -105,7 +105,7 @@ Use this checklist to ensure everything is ready before launching.
 - [ ] Offline mode works (shows cached pages)
 - [ ] Icons appear correctly when installed
 - [ ] App shortcuts work
-- [ ] Theme color matches design
+- [x] Theme color matches design
 - [ ] Splash screen looks good
 
 ## 🚀 Performance
@@ -147,7 +147,7 @@ Use this checklist to ensure everything is ready before launching.
 - [ ] Legal copy reviewed (by lawyer if needed)
 - [ ] Landing page copy finalized
 - [ ] All placeholder text removed
-- [ ] Spelling/grammar checked
+- [x] Spelling/grammar checked
 - [ ] Brand voice consistent
 
 ## 🐛 Edge Cases

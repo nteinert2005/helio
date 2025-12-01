@@ -48,7 +48,7 @@ export default function QuickLogDrawer({ isOpen, onClose }) {
                 </div>
                 <div className="text-center">
                   <div className="text-base font-medium text-helio-bone">Weight</div>
-                  <div className="text-xs text-helio-muted-titanium mt-1">Log today's weight</div>
+                  <div className="text-xs text-helio-muted-titanium mt-1">Log today&apos;s weight</div>
                 </div>
               </button>
 
