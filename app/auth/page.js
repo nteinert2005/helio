@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import Image from 'next/image'
 
 function AuthPageContent() {
   const router = useRouter()
@@ -70,9 +71,10 @@ function AuthPageContent() {
     <div className="min-h-screen flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md space-y-8">
         {/* Header */}
-        <div className="text-center space-y-2">
-          <Link href="/" className="inline-block">
-            <h1 className="text-3xl font-bold gradient-text">HelioIQ</h1>
+        <div className="text-center space-y-4">
+          <Link href="/" className="inline-flex items-center justify-center gap-3">
+            <Image src="/icons/icon.png" width="60" height={60} alt="" />
+            <h1 className="text-4xl font-bold tracking-tight">Helio</h1>
           </Link>
           <p className="text-label-text">
             {isLogin ? 'Welcome back' : 'Start your journey'}

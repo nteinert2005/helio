@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
-import { ArrowLeft, User, Pill, Trash2, ChevronRight, Home, TrendingUp, Plus, Sparkles } from 'lucide-react'
+import { ArrowLeft, User, Pill, Trash2, ChevronRight, Home, TrendingUp, Plus, Sparkles, LogOut } from 'lucide-react'
 
 export default function SettingsPage() {
   const router = useRouter()
@@ -78,6 +78,15 @@ export default function SettingsPage() {
       setError(err.message)
     } finally {
       setSaving(false)
+    }
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut()
+      router.push('/')
+    } catch (error) {
+      setError('Failed to sign out. Please try again.')
     }
   }
 
@@ -287,6 +296,20 @@ export default function SettingsPage() {
             <span className="text-body-text">Terms of Service</span>
             <ChevronRight className="w-5 h-5 text-label-text" />
           </Link>
+        </div>
+
+        {/* Sign Out */}
+        <div className="card-glass">
+          <button
+            onClick={handleSignOut}
+            className="w-full flex items-center justify-between p-4 rounded-button hover:bg-primary-bg/50 transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <LogOut className="w-5 h-5 text-label-text" />
+              <span className="text-body-text">Sign Out</span>
+            </div>
+            <ChevronRight className="w-5 h-5 text-label-text" />
+          </button>
         </div>
 
         {/* Danger Zone */}
