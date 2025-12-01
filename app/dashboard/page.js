@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { User, Home, TrendingUp, Plus, Sparkles } from 'lucide-react'
+import QuickLogDrawer from '@/components/QuickLogDrawer'
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -14,6 +15,7 @@ export default function DashboardPage() {
   const [yesterdayLog, setYesterdayLog] = useState(null)
   const [insight, setInsight] = useState(null)
   const [previousInsight, setPreviousInsight] = useState(null)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   useEffect(() => {
     checkUserAndLoadData()
@@ -181,17 +183,18 @@ export default function DashboardPage() {
               stroke="rgba(255, 255, 255, 0.05)"
               strokeWidth="8"
             />
-            {/* Progress Circle - Using primary-action color */}
+            {/* Progress Circle - Using helio-solar-ember color */}
             <circle
               cx="100"
               cy="100"
               r="85"
               fill="none"
-              stroke="#c98b75"
+              stroke="#F59E0B"
               strokeWidth="8"
               strokeLinecap="round"
               strokeDasharray={`${(todayLog ? 75 : 50) * 5.34} 534`}
               className="transition-all duration-1000 ease-out"
+              style={{ filter: 'drop-shadow(0 0 8px rgba(245, 158, 11, 0.3))' }}
             />
           </svg>
 
@@ -219,14 +222,14 @@ export default function DashboardPage() {
           {/* Log Today Card */}
           <button
             onClick={() => router.push('/log')}
-            className="bg-card-bg/50 rounded-2xl p-6 flex flex-col items-center gap-3 hover:bg-card-bg transition-colors"
+            className="bg-helio-obsidian/50 rounded-2xl p-6 flex flex-col items-center gap-3 hover:bg-helio-obsidian transition-colors border border-helio-ash-divider/30"
           >
-            <div className="w-12 h-12 rounded-xl bg-[#c98b75]/10 flex items-center justify-center">
-              <Plus className="w-6 h-6" style={{ color: '#c98b75' }} />
+            <div className="w-12 h-12 rounded-xl bg-helio-solar-ember/10 flex items-center justify-center">
+              <Plus className="w-6 h-6 text-helio-solar-ember" />
             </div>
             <div className="text-center">
-              <div className="text-sm font-medium text-body-text">Log</div>
-              <div className="text-xs text-label-text mt-1">
+              <div className="text-sm font-medium text-helio-bone">Log</div>
+              <div className="text-xs text-helio-muted-titanium mt-1">
                 {todayLog ? 'Update' : 'Add today'}
               </div>
             </div>
@@ -235,28 +238,28 @@ export default function DashboardPage() {
           {/* View Trends Card */}
           <button
             onClick={() => router.push('/trends')}
-            className="bg-card-bg/50 rounded-2xl p-6 flex flex-col items-center gap-3 hover:bg-card-bg transition-colors"
+            className="bg-helio-obsidian/50 rounded-2xl p-6 flex flex-col items-center gap-3 hover:bg-helio-obsidian transition-colors border border-helio-ash-divider/30"
           >
-            <div className="w-12 h-12 rounded-xl bg-[#c98b75]/10 flex items-center justify-center">
-              <TrendingUp className="w-6 h-6" style={{ color: '#c98b75' }} />
+            <div className="w-12 h-12 rounded-xl bg-helio-solar-ember/10 flex items-center justify-center">
+              <TrendingUp className="w-6 h-6 text-helio-solar-ember" />
             </div>
             <div className="text-center">
-              <div className="text-sm font-medium text-body-text">Trends</div>
-              <div className="text-xs text-label-text mt-1">View history</div>
+              <div className="text-sm font-medium text-helio-bone">Trends</div>
+              <div className="text-xs text-helio-muted-titanium mt-1">View history</div>
             </div>
           </button>
 
           {/* Insights Card */}
           <button
             onClick={() => router.push('/insights')}
-            className="bg-card-bg/50 rounded-2xl p-6 flex flex-col items-center gap-3 hover:bg-card-bg transition-colors"
+            className="bg-helio-obsidian/50 rounded-2xl p-6 flex flex-col items-center gap-3 hover:bg-helio-obsidian transition-colors border border-helio-ash-divider/30"
           >
-            <div className="w-12 h-12 rounded-xl bg-[#c98b75]/10 flex items-center justify-center">
-              <Sparkles className="w-6 h-6" style={{ color: '#c98b75' }} />
+            <div className="w-12 h-12 rounded-xl bg-helio-solar-ember/10 flex items-center justify-center">
+              <Sparkles className="w-6 h-6 text-helio-solar-ember" />
             </div>
             <div className="text-center">
-              <div className="text-sm font-medium text-body-text">Insights</div>
-              <div className="text-xs text-label-text mt-1">
+              <div className="text-sm font-medium text-helio-bone">Insights</div>
+              <div className="text-xs text-helio-muted-titanium mt-1">
                 {insight ? 'Available' : 'Pending'}
               </div>
             </div>
@@ -269,26 +272,26 @@ export default function DashboardPage() {
         <div className="px-6 py-4 space-y-3">
           <div className="max-w-2xl mx-auto space-y-3">
             {/* Why Card */}
-            <div className="bg-card-bg/50 rounded-2xl p-6 flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-[#c98b75]/10 flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-5 h-5" style={{ color: '#c98b75' }} />
+            <div className="bg-helio-obsidian/50 rounded-2xl p-6 flex items-start gap-4 border border-helio-ash-divider/30">
+              <div className="w-10 h-10 rounded-xl bg-helio-solar-ember/10 flex items-center justify-center flex-shrink-0">
+                <Sparkles className="w-5 h-5 text-helio-solar-ember" />
               </div>
               <div className="flex-1">
-                <div className="text-sm font-medium text-body-text mb-2">Weight insight</div>
-                <div className="text-sm text-label-text leading-relaxed">{insight.reason}</div>
+                <div className="text-sm font-medium text-helio-bone mb-2">Weight insight</div>
+                <div className="text-sm text-helio-muted-titanium leading-relaxed">{insight.reason}</div>
               </div>
             </div>
 
             {/* Focus Card */}
-            <div className="bg-card-bg/50 rounded-2xl p-6 flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-[#c98b75]/10 flex items-center justify-center flex-shrink-0">
-                <svg className="w-5 h-5" style={{ color: '#c98b75' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="bg-helio-obsidian/50 rounded-2xl p-6 flex items-start gap-4 border border-helio-ash-divider/30">
+              <div className="w-10 h-10 rounded-xl bg-helio-solar-ember/10 flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 text-helio-solar-ember" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               <div className="flex-1">
-                <div className="text-sm font-medium text-body-text mb-2">Focus today</div>
-                <div className="text-sm text-label-text leading-relaxed">{insight.focus_today}</div>
+                <div className="text-sm font-medium text-helio-bone mb-2">Focus today</div>
+                <div className="text-sm text-helio-muted-titanium leading-relaxed">{insight.focus_today}</div>
               </div>
             </div>
           </div>
@@ -298,52 +301,48 @@ export default function DashboardPage() {
       {/* No Insight State */}
       {todayLog && !insight && (
         <div className="px-6 py-4">
-          <div className="max-w-2xl mx-auto bg-card-bg/50 rounded-2xl p-8 text-center">
-            <div className="text-label-text text-sm mb-2">Day 1</div>
-            <div className="text-body-text font-medium mb-2">Welcome to your journey!</div>
-            <div className="text-label-text text-sm">Your first insight will appear tomorrow</div>
+          <div className="max-w-2xl mx-auto bg-helio-obsidian/50 rounded-2xl p-8 text-center border border-helio-ash-divider/30">
+            <div className="text-helio-muted-titanium text-sm mb-2">Day 1</div>
+            <div className="text-helio-bone font-medium mb-2">Welcome to your journey!</div>
+            <div className="text-helio-muted-titanium text-sm">Your first insight will appear tomorrow</div>
           </div>
         </div>
       )}
 
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-card-bg/80 backdrop-blur-xl border-t border-white/5 pb-safe">
+      <div className="fixed bottom-0 left-0 right-0 bg-helio-obsidian/80 backdrop-blur-xl border-t border-helio-ash-divider pb-safe">
         <div className="max-w-md mx-auto px-6 py-4 flex items-center justify-around">
           <Link href="/dashboard" className="flex flex-col items-center gap-1">
-            <Home className="w-6 h-6 text-body-text" />
-            <span className="text-xs text-body-text font-medium">Today</span>
+            <Home className="w-6 h-6 text-helio-bone" />
+            <span className="text-xs text-helio-bone font-medium">Today</span>
           </Link>
 
           <Link href="/trends" className="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
-            <TrendingUp className="w-6 h-6 text-label-text" />
-            <span className="text-xs text-label-text">Trends</span>
+            <TrendingUp className="w-6 h-6 text-helio-muted-titanium" />
+            <span className="text-xs text-helio-muted-titanium">Trends</span>
           </Link>
 
-          <Link href="/log" className="relative -top-4">
-            <div className="w-16 h-16 rounded-full bg-primary-action flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+          <button onClick={() => setIsDrawerOpen(true)} className="relative -top-4">
+            <div className="w-16 h-16 rounded-full bg-helio-solar-ember flex items-center justify-center shadow-helio-glow-strong hover:scale-110 hover:shadow-helio-glow-strong transition-all active:scale-95">
               <Plus className="w-8 h-8 text-white" strokeWidth={2.5} />
             </div>
-          </Link>
+          </button>
 
           <Link href="/insights" className="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
-            <Sparkles className="w-6 h-6 text-label-text" />
-            <span className="text-xs text-label-text">Insights</span>
+            <Sparkles className="w-6 h-6 text-helio-muted-titanium" />
+            <span className="text-xs text-helio-muted-titanium">Insights</span>
           </Link>
 
           <Link href="/settings" className="flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
-            <User className="w-6 h-6 text-label-text" />
-            <span className="text-xs text-label-text">Settings</span>
+            <User className="w-6 h-6 text-helio-muted-titanium" />
+            <span className="text-xs text-helio-muted-titanium">Settings</span>
           </Link>
         </div>
       </div>
 
-      {/* Stoic-style Footer */}
-      <div className="pb-32 pt-8 text-center">
-        <div className="text-label-text text-xs uppercase tracking-widest">
-          Powered by HelioIQ
-        </div>
-      </div>
+      {/* Quick Log Drawer */}
+      <QuickLogDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
     </div>
   )
 }

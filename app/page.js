@@ -50,8 +50,8 @@ export default function LandingPage() {
           <div className="space-y-12 max-w-xl">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <Image src="/icons/icon.png" width="80" height={80} alt="" />
-              <h1 className="text-2xl font-bold tracking-tight">Helio</h1>
+              <Image src="/icons/icon.png" width="60" height={60} alt="" />
+              <h1 className="text-4xl font-bold tracking-tight">Helio</h1>
             </div>
 
             {/* Hero Headline */}

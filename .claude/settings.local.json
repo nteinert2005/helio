@@ -5,7 +5,8 @@
       "Bash(npm install)",
       "Bash(npm run build:*)",
       "Bash(dir /s /b c:UsersNickDesktophelioiqapp*insights* 2)",
-      "Bash(nul)"
+      "Bash(nul)",
+      "Bash(dir /s /b c:UsersNickDesktophelioiqapp*insights*)"
     ],
     "deny": [],
     "ask": []

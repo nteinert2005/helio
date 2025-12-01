@@ -9,7 +9,7 @@ export const metadata = {
   title: 'HelioIQ - Your GLP-1 Daily Insight Companion',
   description: 'Understand daily weight fluctuations with AI-powered insights while on GLP-1 medications',
   manifest: '/manifest.json',
-  themeColor: '#1A1D20',
+  themeColor: '#0A0A0B',
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
   appleWebApp: {
     capable: true,
