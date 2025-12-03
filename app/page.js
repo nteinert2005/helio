@@ -42,21 +42,39 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-primary-bg flex items-center">
+    <div className="min-h-screen bg-primary-bg">
       <div className="container mx-auto px-6 py-12">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto space-y-16">
 
-          {/* Left Content - Hero + What is Helio */}
-          <div className="space-y-12 max-w-xl">
-            {/* Logo */}
+          {/* Top Bar - Logo and Auth Buttons */}
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Image src="/icons/icon.png" width="60" height={60} alt="" />
               <h1 className="text-4xl font-bold tracking-tight">Helio</h1>
             </div>
 
+            <div className="flex items-center gap-3">
+              <Link
+                href="/auth?mode=login"
+                className="px-6 py-2.5 text-body-text hover:text-white font-medium transition-colors"
+              >
+                Log In
+              </Link>
+              <Link
+                href="/auth?mode=signup"
+                className="px-6 py-2.5 bg-primary-action hover:bg-primary-action/90 text-white font-semibold rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary-action/30"
+              >
+                Sign Up
+              </Link>
+            </div>
+          </div>
+
+          {/* Hero Section */}
+          <div className="space-y-12 max-w-2xl mx-auto text-center">
+
             {/* Hero Headline */}
             <div className="space-y-4">
-              <h2 className="text-5xl md:text-6xl font-black tracking-tight leading-tight">
+              <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-tight">
                 Daily signals. <br />
                 <span className="bg-gradient-to-r from-primary-action to-yellow bg-clip-text text-transparent">
                   Brutal clarity.
@@ -69,22 +87,22 @@ export default function LandingPage() {
             </div>
 
             {/* What is Helio Section */}
-            <div className="space-y-3 py-4">
+            <div className="space-y-4 py-4">
               <h3 className="text-sm uppercase tracking-widest text-label-text font-semibold">The Process</h3>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
+              <ul className="space-y-4 max-w-md mx-auto">
+                <li className="flex items-start gap-3 text-left">
                   <div className="w-5 h-5 rounded-full bg-success/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <div className="w-2 h-2 rounded-full bg-success"></div>
                   </div>
                   <p className="text-body-text"><span className="font-semibold text-white">Track once.</span> Your daily metrics. Under 60 seconds.</p>
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3 text-left">
                   <div className="w-5 h-5 rounded-full bg-primary-action/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <div className="w-2 h-2 rounded-full bg-primary-action"></div>
                   </div>
                   <p className="text-body-text"><span className="font-semibold text-white">See the pattern.</span> Data-backed truth about your shifts.</p>
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3 text-left">
                   <div className="w-5 h-5 rounded-full bg-warning/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <div className="w-2 h-2 rounded-full bg-warning"></div>
                   </div>
@@ -92,11 +110,11 @@ export default function LandingPage() {
                 </li>
               </ul>
             </div>
-            
+
           </div>
 
-          {/* Right Phone Mockup */}
-          <div className="relative flex justify-center lg:justify-end">
+          {/* Phone Mockup - Centered Below Hero */}
+          <div className="relative flex justify-center py-8">
             <div className="relative">
               {/* Phone Frame */}
               <div className="relative w-[320px] h-[650px] bg-gradient-to-br from-helio-obsidian to-helio-void rounded-[3rem] p-3 shadow-2xl border border-helio-ash-divider/30">
@@ -206,10 +224,8 @@ export default function LandingPage() {
             </div>
           </div>
 
-        </div>
-
-        {/* Bottom Section - Full Width Below Grid */}
-        <div className="max-w-7xl mx-auto mt-20 space-y-8">
+          {/* Bottom Section - Waitlist & CTAs */}
+          <div className="space-y-8 max-w-2xl mx-auto">
 
           <a className='flex' href="https://helioiq.canny.io/feature-requests">
             <button className='px-4 py-4 bg-primary-action rounded-xl text-white font-semibold'>
@@ -305,6 +321,8 @@ export default function LandingPage() {
             <Link href="/terms" className="hover:text-body-text transition-colors">
               Terms of Service
             </Link>
+          </div>
+
           </div>
         </div>
 
