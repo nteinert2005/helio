@@ -10,6 +10,7 @@ export default function LandingPage() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const isDevelopment = process.env.NODE_ENV === 'development'
 
   const handleJoinWaitlist = async (e) => {
     e.preventDefault()
@@ -53,20 +54,22 @@ export default function LandingPage() {
               <h1 className="text-4xl font-bold tracking-tight">Helio</h1>
             </div>
 
-            <div className="flex items-center gap-3">
-              <Link
-                href="/auth?mode=login"
-                className="px-6 py-2.5 text-body-text hover:text-white font-medium transition-colors"
-              >
-                Log In
-              </Link>
-              <Link
-                href="/auth?mode=signup"
-                className="px-6 py-2.5 bg-primary-action hover:bg-primary-action/90 text-white font-semibold rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary-action/30"
-              >
-                Sign Up
-              </Link>
-            </div>
+            {isDevelopment && (
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/auth?mode=login"
+                  className="px-6 py-2.5 text-body-text hover:text-white font-medium transition-colors"
+                >
+                  Log In
+                </Link>
+                <Link
+                  href="/auth?mode=signup"
+                  className="px-6 py-2.5 bg-primary-action hover:bg-primary-action/90 text-white font-semibold rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary-action/30"
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Hero Section */}
