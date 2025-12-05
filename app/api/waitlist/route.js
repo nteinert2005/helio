@@ -21,7 +21,7 @@ export async function POST(request) {
       )
     }
 
-    // Check if email already exists
+    // Check if email already exists in Supabase
     const { data: existing } = await supabase
       .from('waitlist')
       .select('email')
@@ -35,7 +35,7 @@ export async function POST(request) {
       )
     }
 
-    // Insert into waitlist
+    // Insert into Supabase waitlist
     const { error: insertError } = await supabase
       .from('waitlist')
       .insert([
@@ -51,6 +51,37 @@ export async function POST(request) {
         { error: 'Failed to join waitlist' },
         { status: 500 }
       )
+    }
+
+    // Add to Brevo mailing list if API key and list ID are configured
+    const brevoApiKey = process.env.BREVO_API_KEY
+    const brevoListId = process.env.BREVO_LIST_ID
+
+    if (brevoApiKey && brevoListId) {
+      try {
+        const brevoResponse = await fetch('https://api.brevo.com/v3/contacts', {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'api-key': brevoApiKey,
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email.toLowerCase(),
+            listIds: [parseInt(brevoListId)],
+            updateEnabled: false
+          })
+        })
+
+        if (!brevoResponse.ok) {
+          const brevoError = await brevoResponse.json()
+          console.error('Brevo API error:', brevoError)
+          // Don't fail the request if Brevo fails - user is already in Supabase
+        }
+      } catch (brevoError) {
+        console.error('Brevo integration error:', brevoError)
+        // Don't fail the request if Brevo fails - user is already in Supabase
+      }
     }
 
     return NextResponse.json(
