@@ -267,8 +267,15 @@ export default function LandingPage() {
 
             {/* Success Message */}
             {message && (
-              <div className="px-4 py-3 bg-success/10 border border-success/20 rounded-lg text-success text-sm">
-                {message}
+              <div className="space-y-3">
+                <div className="px-4 py-3 bg-success/10 border border-success/20 rounded-lg text-success text-sm">
+                  {message}
+                </div>
+                <div className="px-4 py-3 bg-primary-action/10 border border-primary-action/20 rounded-lg">
+                  <p className="text-body-text text-sm">
+                    Check spam for an email in the next 2 days for insights and latest updates.
+                  </p>
+                </div>
               </div>
             )}
 
